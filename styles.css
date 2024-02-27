@@ -1,0 +1,75 @@
+* { 
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+main {
+    display: flex;
+    flex-direction: row;
+}
+.sidebar {
+    /* background-color: #4882a2; */
+    background-color: #72a9c6;
+    /* background-image: linear-gradient(0deg,#4882A2 100% #4C87A8 76% #4882A2 56%); */
+    width: 22%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.sidebar .logo img{
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+.sidebar .heading {
+    font-size: large;
+    font-weight: 700;   
+    padding: 2rem; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar .contents {
+    display: flex;
+    flex-direction: column;
+}
+
+.contents .option {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 2rem 1rem 2rem 1rem;
+    display: flex;
+    justify-content: space-around;
+    
+}
+.contents .option:hover {
+    border: solid 1px white;
+    /* box-shadow: 0.25rem 0.25rem 0.25rem white; */
+}
+
+.option .sidebar-icon {
+    /* margin-left: 1rem;
+    margin-right: 2rem; */
+   
+    
+}
+
+.main-content {
+   flex: 1;
+}  
+
+.main-content .title {
+    background-color: #e9f0f4 
+}
+
+.title h2 {
+    padding-left: 1rem ;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    width: 100%;
+    color: rgb(33, 67, 78);
+    
+}

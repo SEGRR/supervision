@@ -8,20 +8,21 @@ const teacherSchema = new mongoose.Schema({
     designation:{
         type: String
     },
-    dept: {
-        type: String
-    },
-    subjects: [{
-        type: Schema.Types.ObjectId,
-        ref: "Subjects"
-    }],
-    joining_data : {
+    // dept: {
+    //     type: String
+    // },
+    // subjects: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Subjects"
+    // }],
+    joining_date : {
         type: Date
     },
-    year : {
-        type : Number
-    }
+    teachTo : [
+        {type: String}
+    ]
+    
 });
 
-const Teachers = mongoose.model("Teachers",teacherSchema);
-module.exports = Teachers;
+const Teacher = mongoose.model("Teacher",teacherSchema);
+module.exports = Teacher;
