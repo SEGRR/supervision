@@ -39,7 +39,8 @@ const Teachers = require("./models/teacher.js");
 // console.log(schedule);
 
 module. exports = async () => {
-    let examDays = 4;
+ 
+let examDays = 4;
 let perClassReq = 1;
 let  blocks = 6
 let perDayReq = perClassReq*blocks;
@@ -49,26 +50,58 @@ let year = "TE";
 // available teachers list
 
 
-let allTeachers = await Teachers.find({teachTo : year}) ;// teachers teaching only to TE
-let yearOnly = await Teachers.find({teachTo: [year]});
-let avail = allTeachers.length;
-
+ let allTeachers = await Teachers.find({teachTo : year}) ;// teachers teaching only to TE
+ console.log(allTeachers)
+let yearOnlyTeachers = await Teachers.find({teachTo: [year]});
+// let avail = allTeachers.length;
+let avail = 16
 console.log("available teachers: ",avail);
-let perTeacher = Math.floor(totalReq/avail);
-console.log("perTeacher ", perTeacher)
-console.log("remaining ",totalReq%avail);
-console.log("only TE teachers",yearOnly.length);
+
  
-schedule = []
+let yearOnly = 6 
+// console.log("remaining ",totalReq%avail);
+// console.log("only TE teachers",yearOnly.length);
+let perTeacher = Math.floor(totalReq/avail);
+var remainingSlots = totalReq % avail;
+var schedule = {}
 
-for(var slot = 0 ; slot < totalReq ; slot++){
-    let s = []
+  allTeachers.forEach((doc , index)=>{
+      let list = new Array(totalReq).fill(0);
+      schedule[doc.teacherId] = list;
+  });
 
-    for(var teacher  = 0 ; teacher < avail ; teacher++){
-        
+
+var sch= 0
+
+ for(var i = 0 ; i<perTeacher ; i++){
+
+    for(let teacher in schedule){
+        schedule[teacher][sch] = 1;
+        sch++;
     }
+
+ }
+
+ if(sch > totalReq){
+    console.log(schedule)
+ }
+
+while(sch < totalReq){
+  yearOnlyTeachers.forEach((doc)=>{
+    if(sch < totalReq){
+      let teacherId = doc.teacherId;
+      schedule[teacherId][sch] = 1;
+      sch++;
+    }
+  });
 }
 
+
+console.table(schedule)
+ return schedule
+
 }
+
+
 
 

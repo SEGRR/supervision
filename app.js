@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 async function main(){
-    mongoose.connect("mongodb://127.0.0.1:27017/supervision");
+    mongoose.connect("mongodb+srv://sheth-saniya:sheth9970@cluster0.lnp7zp3.mongodb.net/");
 }
 
 main().then(()=>{
@@ -89,14 +89,20 @@ app.get("/teachers/delete",() => {
 
 app.delete("/teachers/delete/:id",async(req,res) => {
     //delete from db
-    const {id} = req.params;
-    let deletedTeacher = await Teacher.findByIdAndDelete(id);
-    res.json(deletedTeacher);
-})
+    // const {id} = req.params;
+    // let deletedTeacher = await Teacher.findByIdAndDelete(id);
+    // res.json(deletedTeacher);
+    await Teacher.deleteMany({})
+});
+
+app.delete("/teachers/delete/",async(req,res) => {
+    await Teacher.deleteMany({})
+    res.send("done")
+});
 
 app.get("/supervision/new",(req,res) => {
 
-    
+
 })
 
 app.post("/supervision/new",(req,res) => {
@@ -105,10 +111,11 @@ app.post("/supervision/new",(req,res) => {
 })
 
 app.get("/schedule",async (req,res) => {
-    await scheduler();
+    let sechedule =   await scheduler();
+    res.json(sechedule);
 });
 
 
 app.listen(8080,() => {
-    console.log("app is listening on port 8080");
+    console.log("http://localhost:8080");
 })

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const initData = require("./data.js");
 const Teacher = require("../models/teacher.js");
 async function main(){
-    mongoose.connect("mongodb://127.0.0.1:27017/supervision");
+    mongoose.connect("mongodb+srv://sheth-saniya:sheth9970@cluster0.lnp7zp3.mongodb.net/");
 }
 
 main().then(()=>{
