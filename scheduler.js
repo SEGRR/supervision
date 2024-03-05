@@ -38,14 +38,37 @@ const Teachers = require("./models/teacher.js");
  
 // console.log(schedule);
 
-
-let examDays = 4;
-let perDayReq = perClassReq*classes;
-let classes = 6
+module. exports = async () => {
+    let examDays = 4;
 let perClassReq = 1;
+let  blocks = 6
+let perDayReq = perClassReq*blocks;
+
 let totalReq = examDays * perDayReq; 
 let year = "TE";
+// available teachers list
 
-let yearOnly = Teachers.find({teachTo.}) // teachers teaching only to TE
-let perTeacher = totalReq / yearOnly;
+
+let allTeachers = await Teachers.find({teachTo : year}) ;// teachers teaching only to TE
+let yearOnly = await Teachers.find({teachTo: [year]});
+let avail = allTeachers.length;
+
+console.log("available teachers: ",avail);
+let perTeacher = Math.floor(totalReq/avail);
+console.log("perTeacher ", perTeacher)
+console.log("remaining ",totalReq%avail);
+console.log("only TE teachers",yearOnly.length);
+ 
+schedule = []
+
+for(var slot = 0 ; slot < totalReq ; slot++){
+    let s = []
+
+    for(var teacher  = 0 ; teacher < avail ; teacher++){
+        
+    }
+}
+
+}
+
 

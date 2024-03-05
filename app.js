@@ -3,7 +3,7 @@ const express = require("express");
 const Teacher = require("./models/teacher");
 const app = express();
 const bodyParser = require("body-parser");
-const { findByIdAndDelete } = require("./models/subjects");
+const scheduler = require("./scheduler");
 
 // app.use(express.urlencoded({extended: true}));
 // app.use(methodOverride("_method"));
@@ -103,6 +103,11 @@ app.post("/supervision/new",(req,res) => {
     //  form -> get total requirement , exam type
      // call suitable func based on exam type
 })
+
+app.get("/schedule",async (req,res) => {
+    await scheduler();
+});
+
 
 app.listen(8080,() => {
     console.log("app is listening on port 8080");
