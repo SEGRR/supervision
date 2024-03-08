@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Subjects = require("./subjects.js");
 
 const teacherSchema = new mongoose.Schema({
+    teacherId: Number,
     name:{
         type: String,
     },
