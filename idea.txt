@@ -1,0 +1,3 @@
+reports ->  for agents  list all users devices and their informtaion 
+
+water tankers device -  realtime tankers 

@@ -1,15 +1,25 @@
 const mongoose = require("mongoose");
 
 
-const supervision = new mongoose.Schema({
+const scheduleSchema = new mongoose.Schema({
+      teacherId:{
+        type:[Number],
+        default:[]
+      }
+  });
+
+
+const supervisionSchedule = new mongoose.Schema({
     title: {
         type: String
     },
     createdOn:{
-        type: Date
+        type: Date,
+        default: new Date()
     },
     updatedOn:{
         type :Date,
+        default: new Date()
     },
     year:{
         type:[String]
@@ -22,9 +32,12 @@ const supervision = new mongoose.Schema({
     },
     timeSlots:{
         type:[Date]
-    }, 
+    },
+    schedule:{
+        type: Map
+    } 
 });
 
-const Subjects = mongoose.model("Subjcts",subjectSchema);
+const supervisionSchema = mongoose.model("Supervision",supervisionSchedule);
 
-module.exports = Subjects;
+module.exports = supervisionSchema;

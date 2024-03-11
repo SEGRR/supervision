@@ -4,14 +4,15 @@ const Teacher = require("./models/teacher");
 const app = express();
 const bodyParser = require("body-parser");
 const scheduler = require("./scheduler");
-
+const supervisionSchema = require("./models/supervision");
+require('dotenv').config()
 // app.use(express.urlencoded({extended: true}));
 // app.use(methodOverride("_method"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 async function main(){
-    mongoose.connect("mongodb+srv://sheth-saniya:sheth9970@cluster0.lnp7zp3.mongodb.net/");
+    mongoose.connect(process.env.mongoURL);
 }
 
 main().then(()=>{
@@ -100,22 +101,30 @@ app.delete("/teachers/delete/",async(req,res) => {
     res.send("done")
 });
 
-app.get("/supervision/new",(req,res) => {
+app.post("/supervision/new", async (req,res) => {
+    let  {title, subjects, blocks, year, paperPerDay, timeSlots , semester, teacherList  } = req.body
+    let schedule =   await scheduler(subjects ,blocks, paperPerDay , year , teacherList);
+     res.json(schedule)
+});
 
 
-})
 
-app.post("/supervision/new",(req,res) => {
-    //  form -> get total requirement , exam type
-     // call suitable func based on exam type
-})
 
-app.get("/schedule",async (req,res) => {
-    let sechedule =   await scheduler();
-    res.json(sechedule);
+app.post("/schedules",async (req,res) => {
+    let  {title, examDays, blocks, year, paperPerDay, timeSlots , semester, teacherList  } = req.body
+    let schedule =   await scheduler(subjects ,blocks, paperPerDay , year , teacherList);
+
+    // let newSchedule = new supervisionSchema({title , year , paperPerDay , timeSlots, semester , schedule })
+    //  await newSchedule.save();
+    res.json(schedule);
+});
+
+app.delete('/schedules' , async(req ,res)=>{
+     await supervisionSchema.deleteMany({});
+     res.send("done")
 });
 
 
 app.listen(8080,() => {
     console.log("http://localhost:8080");
-})
+});
