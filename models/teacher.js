@@ -20,7 +20,7 @@ const teacherSchema = new mongoose.Schema({
         type: Date
     },
     teachTo : [
-        {type: String}
+        {type: [String]}
     ]
     
 });

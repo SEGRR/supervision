@@ -3,7 +3,7 @@ const express = require("express");
 const Teacher = require("./models/teacher");
 const app = express();
 const bodyParser = require("body-parser");
-const scheduler = require("./scheduler");
+const {MakeSchedule} = require("./scheduler");
 const supervisionSchema = require("./models/supervision");
 require('dotenv').config()
 // app.use(express.urlencoded({extended: true}));
@@ -51,7 +51,6 @@ app.get("/teachers/new",(req,res) => {
 app.post("/teachers/new",async (req,res) => {
     //  form -> get teacher info
     // insert in db
-
     const {name,designation,joiningDate,teachTo} = req.body;
     let newTeacher = new Teacher({
         name: name,
@@ -62,15 +61,14 @@ app.post("/teachers/new",async (req,res) => {
     console.log(newTeacher);
     await newTeacher.save();
     res.json(newTeacher);
-    // await Teacher.insertOne()
+
 });
 
 app.get("/teachers/edit",(req,res) => {
-    //render form
-
+   
 });
 
-app.post("/teachers/edit/:id",async(req,res) => {
+app.put("/teachers/edit/:id",async(req,res) => {
     //update in db
     const {id} = req.params;
     const {name,designation,joiningDate,teachTo} = req.body;
@@ -88,30 +86,35 @@ app.get("/teachers/delete",() => {
     // render delete info
 })
 
-app.delete("/teachers/delete/:id",async(req,res) => {
-    //delete from db
-    // const {id} = req.params;
-    // let deletedTeacher = await Teacher.findByIdAndDelete(id);
-    // res.json(deletedTeacher);
-    await Teacher.deleteMany({})
-});
+// app.delete("/teachers/delete/:id",async(req,res) => {
+//     //delete from db
+//     // const {id} = req.params;
+//     // let deletedTeacher = await Teacher.findByIdAndDelete(id);
+//     // res.json(deletedTeacher);
+//     await Teacher.deleteMany({})
+// });
 
-app.delete("/teachers/delete/",async(req,res) => {
-    await Teacher.deleteMany({})
+// app.delete("/teachers/delete/",async(req,res) => {
+//     await Teacher.deleteMany({})
+//     res.send("done")
+// });
+
+app.delete("/teachers/delete/:id",async(req,res) => {
+    await Teacher.deleteById()
     res.send("done")
 });
 
 app.post("/supervision/new", async (req,res) => {
-    let  {title, subjects, blocks, year, paperPerDay, timeSlots , semester, teacherList  } = req.body
-    let schedule =   await scheduler(subjects ,blocks, paperPerDay , year , teacherList);
-     res.json(schedule)
+    let  {title, subjects, blocks, year, paperPerDay, timeSlots, teacherList  } = req.body
+    let schedule =   await MakeSchedule(title ,subjects ,blocks, year, paperPerDay , timeSlots , teacherList);
+    res.json(schedule)
 });
 
 
 
 
 app.post("/schedules",async (req,res) => {
-    let  {title, examDays, blocks, year, paperPerDay, timeSlots , semester, teacherList  } = req.body
+    let  {subjects ,title, examDays, blocks, year, paperPerDay, timeSlots , semester, teacherList  } = req.body
     let schedule =   await scheduler(subjects ,blocks, paperPerDay , year , teacherList);
 
     // let newSchedule = new supervisionSchema({title , year , paperPerDay , timeSlots, semester , schedule })

@@ -37,12 +37,46 @@ const Teachers = require("./models/teacher.js");
 // }
  
 // console.log(schedule);
+// {
+//   "title": "a",
+//   "selectedYears": [
+//       "FE",
+//       "SE"
+//   ],
+//   "subjectsPerYear": {
+//       "FE": "2",
+//       "SE": "3"
+//   },
+//   "paperSlotsPerDay": "1",
+//   "paperTimeSlots": [
+//       {
+//           "startTime": "03:08",
+//           "endTime": "04:08"
+//       }
+//   ],
+//   "noOfBlocks": "4"
+// }
 
-module. exports = async (numSubjects ,blocks, paperPerDay , year , teacherList) => {
+
+async function MakeSchedule(title, subjects, blocks, year, paperPerDay, timeSlots, teacherList){
+
+  let finalSchedules = {}
+
+    for(let y of year)
+       finalSchedules[y] = await createSingleSchedule(subjects[y] , blocks, paperPerDay , y, teacherList)
+  
+  
+
+    return finalSchedules;
+}
+
+const createSingleSchedule = async (numSubjects ,blocks, paperPerDay , year , teacherList) => {
  
 // let examDays = 4;
 // let perClassReq = 1;
 // let  blocks = 6
+
+console.log(numSubjects ,blocks, paperPerDay , year )
 
 
 // a block needs teacher for invigilation , a subject requires a number of blocks , 
@@ -87,6 +121,8 @@ let perTeacher = Math.floor(totalReq/avail);
 // remaining slots will be assgined to yearOnly teachers 
 var remainingSlots = totalReq % avail;
 
+console.log("avail" , avail)
+
 
 // final schedule
 var schedule = {}
@@ -99,12 +135,15 @@ var schedule = {}
 
 // create our schedule table  with  teacher id and not schedule assigned 
 // i.e.   teacherId : [ 0 0 0 0 0 0 0 0 0 0]
+
+console.log("totalReq" , totalReq)
+
   allTeachers.forEach((doc , index)=>{
-      let list = new Array(totalReq).fill(0);
+      let list = new Array(totalReq).fill(false);
       schedule[doc.teacherId] = list;
   });
 
-
+ console.log("made init sch");
 // having refrence to which schedule we are currently assigning 
 var sch= 0
 
@@ -114,12 +153,13 @@ var sch= 0
  for(var i = 0 ; i<perTeacher ; i++){
 
     for(let teacher in schedule){
-        schedule[teacher][sch] = 1;
+        schedule[teacher][sch] = true;
         sch++;
     }
 
  }
 
+console.log("starting init make")
 
 // for remaining slots will assigned to yearonly techer 
 // if there are any remaining slots 
@@ -129,7 +169,7 @@ while(sch < totalReq){
   yearOnlyTeachers.forEach((doc)=>{
     if(sch < totalReq){
       let teacherId = doc.teacherId;
-      schedule[teacherId][sch] = 1;
+      schedule[teacherId][sch] = true;
       sch++;
     }
   });
@@ -139,11 +179,12 @@ while(sch < totalReq){
 // finally print the result 
 // and return the schedule 
 
-console.table(schedule)
- return schedule
+console.table(schedule);
+ return { totalSlots:totalReq ,schedule};
 
 }
 
 
 
 
+module. exports = {MakeSchedule}
