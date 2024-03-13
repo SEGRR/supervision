@@ -63,10 +63,8 @@ async function MakeSchedule(title, subjects, blocks, year, paperPerDay, timeSlot
   let finalSchedules = {}
 
     for(let y of year)
-       finalSchedules[y] = await createSingleSchedule(subjects[y] , blocks, paperPerDay , y, teacherList)
+       finalSchedules[y] = await createSingleSchedule(subjects[y] , blocks[y], paperPerDay , y, teacherList)
   
-  
-
     return finalSchedules;
 }
 
@@ -183,8 +181,22 @@ console.table(schedule);
  return { totalSlots:totalReq ,schedule};
 
 }
+ 
+// {
+//   techerId:{
+    // slotNo:,
+    // date:,
+    // time:,
+    // blockNumber:,
+    // subject:,
+    // year:,
+//   }
+// }
 
 
+function makeFacultyWiseSchedule(sch){
+
+}
 
 
 module. exports = {MakeSchedule}
