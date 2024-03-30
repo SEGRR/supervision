@@ -12,6 +12,7 @@ require('dotenv').config()
 // app.use(methodOverride("_method"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cors());
 
 async function main(){
     mongoose.connect(process.env.mongoURL);
@@ -128,9 +129,14 @@ app.delete("/teachers/delete/:id",async(req,res) => {
 });
 
 app.post("/supervision/new", async (req,res) => {
-    let  {title, subjects, blocks, year, paperPerDay, timeSlots, teacherList  } = req.body
-    let schedule =   await MakeSchedule(title ,subjects ,blocks, year, paperPerDay , timeSlots , teacherList);
+    console.log(req.body);
+    try{
+    let  {title, subjectsPerYear, noOfBlocksPerYear, selectedYears, paperSlotsPerDay, paperTimeSlots, teacherList  } = req.body
+    let schedule =   await MakeSchedule(title ,subjectsPerYear ,noOfBlocksPerYear, selectedYears, paperSlotsPerDay , paperTimeSlots , teacherList);
     res.json(schedule)
+    }catch(error){
+        res.json({error:error.message});
+    }
 });
 
 
