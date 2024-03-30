@@ -10,7 +10,6 @@ const cors = require('cors');
 require('dotenv').config()
 // app.use(express.urlencoded({extended: true}));
 // app.use(methodOverride("_method"));
-app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -29,9 +28,30 @@ app.get("/",(req,res) => {
     res.send("hello!");
 });
 
-app.get("/supervision",() => {
-    //render dashboard
+app.get("/supervision",async (req ,res) => {
+    try{
+    const sch = await supervisionSchema.find().select(["-schedule" , "-teacherWiseSchedule"]);
+
+     res.json(sch);
+    }
+    catch(error){
+        res.json({error:error.message});
+    }  
 });
+
+app.get("/supervision/:id",async (req ,res) => {
+    const {id} = req.params;
+    try{
+    const sch = await supervisionSchema.findById(id);
+        
+     res.json(sch);
+    }
+    catch(error){
+        res.json({error:error.message});
+    }  
+});
+
+
 
 app.get("/teachers",async (req,res) => {
     //render teachers
@@ -108,9 +128,8 @@ app.delete("/teachers/delete/:id",async(req,res) => {
 });
 
 app.post("/supervision/new", async (req,res) => {
-    console.log('request recieved')
-    let {subjectsPerYear ,title, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots, teacherList  } = req.body
-    let schedule =   await MakeSchedule(title ,subjectsPerYear ,noOfBlocks, selectedYears, paperSlotsPerDay , paperTimeSlots , teacherList);
+    let  {title, subjects, blocks, year, paperPerDay, timeSlots, teacherList  } = req.body
+    let schedule =   await MakeSchedule(title ,subjects ,blocks, year, paperPerDay , timeSlots , teacherList);
     res.json(schedule)
 });
 
