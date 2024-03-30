@@ -5,9 +5,12 @@ const app = express();
 const bodyParser = require("body-parser");
 const {MakeSchedule} = require("./scheduler");
 const supervisionSchema = require("./models/supervision");
+const cors = require('cors');
+
 require('dotenv').config()
 // app.use(express.urlencoded({extended: true}));
 // app.use(methodOverride("_method"));
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -105,21 +108,27 @@ app.delete("/teachers/delete/:id",async(req,res) => {
 });
 
 app.post("/supervision/new", async (req,res) => {
-    let  {title, subjects, blocks, year, paperPerDay, timeSlots, teacherList  } = req.body
-    let schedule =   await MakeSchedule(title ,subjects ,blocks, year, paperPerDay , timeSlots , teacherList);
+    console.log('request recieved')
+    let {subjectsPerYear ,title, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots, teacherList  } = req.body
+    let schedule =   await MakeSchedule(title ,subjectsPerYear ,noOfBlocks, selectedYears, paperSlotsPerDay , paperTimeSlots , teacherList);
     res.json(schedule)
 });
 
 
 
 
-app.post("/schedules",async (req,res) => {
-    let  {subjects ,title, examDays, blocks, year, paperPerDay, timeSlots , semester, teacherList  } = req.body
-    let schedule =   await scheduler(subjects ,blocks, paperPerDay , year , teacherList);
 
-    // let newSchedule = new supervisionSchema({title , year , paperPerDay , timeSlots, semester , schedule })
-    //  await newSchedule.save();
-    res.json(schedule);
+
+// UNDER WORK DONT USE
+app.post("/schedules/save",async (req,res) => {
+    let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
+
+    for(let y of selectedYears){
+        let newSchedule = new supervisionSchema({title , y , paperSlotsPerDay , paperTimeSlots , schedule:finalSchedule[y] })
+        await newSchedule.save();
+    }
+
+    // res.json(schedule);
 });
 
 app.delete('/schedules' , async(req ,res)=>{
