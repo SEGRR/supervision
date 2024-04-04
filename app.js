@@ -7,6 +7,221 @@ const {MakeSchedule} = require("./scheduler");
 const supervisionSchema = require("./models/supervision");
 const cors = require('cors');
 
+// add this obj to db
+
+// {
+//     "title": "unit test 2",
+//     "selectedYears": [
+//         "TE"
+//     ],
+//     "subjectsPerYear": {
+//         "TE": "4"
+//     },
+//     "paperSlotsPerDay": "1",
+//     "paperTimeSlots": [
+//         {
+//             "startTime": "13:53",
+//             "endTime": "14:53"
+//         }
+//     ],
+//     "noOfBlocksPerYear": {
+//         "TE": "2"
+//     },
+//     "yearSchedule": [
+//         {
+//             "totalSlots": 8,
+//             "schedule": {
+//                 "2": [
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false
+//                 ],
+//                 "5": [
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false
+//                 ],
+//                 "6": [
+//                     true,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     true
+//                 ],
+//                 "7": [
+//                     false,
+//                     true,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false
+//                 ],
+//                 "8": [
+//                     false,
+//                     false,
+//                     true,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false
+//                 ],
+//                 "10": [
+//                     false,
+//                     false,
+//                     false,
+//                     true,
+//                     false,
+//                     false,
+//                     false,
+//                     false
+//                 ],
+//                 "11": [
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     true,
+//                     false,
+//                     false,
+//                     false
+//                 ],
+//                 "12": [
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     true,
+//                     false,
+//                     false
+//                 ],
+//                 "13": [
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false
+//                 ],
+//                 "20": [
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false
+//                 ],
+//                 "23": [
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false
+//                 ],
+//                 "24": [
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false
+//                 ],
+//                 "27": [
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     true,
+//                     false
+//                 ],
+//                 "30": [
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false
+//                 ],
+//                 "32": [
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false
+//                 ],
+//                 "33": [
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false,
+//                     false
+//                 ]
+//             },
+//             "headers": {
+//                 "days": [
+//                     "Day1 ",
+//                     "Day 2",
+//                     "Day 3",
+//                     "Day 4"
+//                 ],
+//                 "subjects": [
+//                     "Subject 1",
+//                     "Subject 2",
+//                     "Subject 3",
+//                     "Subject 4"
+//                 ],
+//                 "blocks": [
+//                     "Block 1",
+//                     "Block 1",
+//                     "Block 1",
+//                     "Block 1",
+//                     "Block 1",
+//                     "Block 1",
+//                     "Block 1",
+//                     "Block 1"
+//                 ]
+//             }
+//         }
+//     ]
+//}
+
+
+
 require('dotenv').config()
 // app.use(express.urlencoded({extended: true}));
 // app.use(methodOverride("_method"));
@@ -26,7 +241,7 @@ main().then(()=>{
 
 
 app.get("/",(req,res) => {
-    res.send("hello!");
+    res.send("hello!");k
 });
 
 app.get("/supervision",async (req ,res) => {
@@ -146,13 +361,15 @@ app.post("/supervision/new", async (req,res) => {
 
 // UNDER WORK DONT USE
 app.post("/schedules/save",async (req,res) => {
-    let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
+    // let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
+    try{
 
-    for(let y of selectedYears){
         let newSchedule = new supervisionSchema({title , y , paperSlotsPerDay , paperTimeSlots , schedule:finalSchedule[y] })
         await newSchedule.save();
+        res.json(newSchedule);
+    }catch(error){
+        res.status(400).json({error:error.message});
     }
-
     // res.json(schedule);
 });
 

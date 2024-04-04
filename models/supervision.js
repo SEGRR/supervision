@@ -27,6 +27,30 @@ const supervisionSchedule = new mongoose.Schema({
     title: {
         type: String
     },
+    selectedYears: {
+        type: [String]
+    },
+    paperSlotsPerDay: {
+        type: Number
+    },
+    noOfBlocksPerYear: {
+        type: Map, 
+    },
+    timeSlots: {
+        type: [Date]
+    },
+    yearSchedule: {
+        type: [{
+            totalSlots:Number,
+            schedule: Map,
+            headers:{
+                days:[String],
+                subjects:[String],
+                blocks:[String]
+            }
+        }],
+        default: []
+    },
     createdOn: {
         type: Date,
         default: new Date()
@@ -35,34 +59,6 @@ const supervisionSchedule = new mongoose.Schema({
         type: Date,
         default: new Date()
     },
-    year: {
-        type: [String]
-    },
-    semester: {
-        type: Number
-    },
-    paperPerDay: {
-        type: Number
-    },
-    numberOfBlocks: {
-        type: [Number],
-        default: 0
-    },
-    timeSlots: {
-        type: [Date]
-    },
-    schedule: {
-        type: Map,
-        default: null
-    },
-    teacherWiseSchedule: {
-        type: Map,
-        default: null
-    },
-    status:{
-        type: String,
-        default: "draft"
-    }
 });
 
 const supervisionSchema = mongoose.model("Supervision", supervisionSchedule);
