@@ -355,7 +355,16 @@ app.post("/supervision/new", async (req,res) => {
 });
 
 
+app.get("/schedules/:id", async(req,res)=>{
+    let {id} = req.params;
+    try{
+        let schedule =  await supervisionSchema.findById(id);
+        res.json(schedule);
+    }catch(error){
+        res.status(400).json({error:error.message});
 
+    }
+})
 
 
 
@@ -373,10 +382,10 @@ app.post("/schedules/save",async (req,res) => {
     // res.json(schedule);
 });
 
-app.delete('/schedules' , async(req ,res)=>{
-     await supervisionSchema.deleteMany({});
-     res.send("done")
-});
+// app.delete('/schedules' , async(req ,res)=>{
+//      await supervisionSchema.deleteMany({});
+//      res.send("done")
+// });
 
 
 app.listen(8080,() => {
