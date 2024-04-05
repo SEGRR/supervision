@@ -290,15 +290,17 @@ app.get("/teachers/new",(req,res) => {
 app.post("/teachers/new",async (req,res) => {
     //  form -> get teacher info
     // insert in db
-    const {name,designation,joiningDate,teachTo} = req.body;
+    const {teacherId,name,designation,joiningDate,teachTo} = req.body;
     let newTeacher = new Teacher({
-        name: name,
-        designation: designation,
-        joiningDate: joiningDate,
-        teachTo: teachTo,
+        teacherId,
+        name,
+        designation,
+        joiningDate,
+        teachTo
     });
+    console.log(req.body);
     console.log(newTeacher);
-    await newTeacher.save();
+   // await newTeacher.save();
     res.json(newTeacher);
 
 });
@@ -355,7 +357,7 @@ app.post("/supervision/new", async (req,res) => {
 });
 
 
-app.get("/schedules/:id", async(req,res)=>{
+app.get("/supervision/:id", async(req,res)=>{
     let {id} = req.params;
     try{
         let schedule =  await supervisionSchema.findById(id);
@@ -369,12 +371,12 @@ app.get("/schedules/:id", async(req,res)=>{
 
 
 // UNDER WORK DONT USE
-app.post("/schedules/save",async (req,res) => {
+app.post("/supervision/save",async (req,res) => {
     // let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
     try{
-
-        let newSchedule = new supervisionSchema({title , y , paperSlotsPerDay , paperTimeSlots , schedule:finalSchedule[y] })
+        let newSchedule = new supervisionSchema({...req.body})
         await newSchedule.save();
+        console.log('saved schedule' , newSchedule._id);
         res.json(newSchedule);
     }catch(error){
         res.status(400).json({error:error.message});

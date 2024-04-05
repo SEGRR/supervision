@@ -19,9 +19,10 @@ const teacherSchema = new mongoose.Schema({
     joining_date : {
         type: Date
     },
-    teachTo : [
-        {type: [String]}
-    ]
+    teachTo : {
+        type:[String],
+        default:[]
+    }
     
 });
 
