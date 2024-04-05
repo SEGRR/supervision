@@ -241,7 +241,7 @@ main().then(()=>{
 
 
 app.get("/",(req,res) => {
-    res.send("hello!");k
+    res.send("hello!");
 });
 
 app.get("/supervision",async (req ,res) => {
@@ -266,6 +266,19 @@ app.get("/supervision/:id",async (req ,res) => {
         res.json({error:error.message});
     }  
 });
+
+app.delete("/supervision/:id",async (req ,res) => {
+    const {id} = req.params || req.body;
+    try{
+    const sch = await supervisionSchema.findByIdAndDelete(id);
+        
+     res.json(sch);
+    }
+    catch(error){
+        res.json({error:error.message});
+    }  
+});
+
 
 
 
