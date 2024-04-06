@@ -22,7 +22,7 @@ const teacherSchema = new mongoose.Schema({
     teachTo : {
         type:[String],
         default:[]
-    }
+    },
     
 });
 

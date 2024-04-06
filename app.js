@@ -6,225 +6,12 @@ const bodyParser = require("body-parser");
 const {MakeSchedule} = require("./scheduler");
 const supervisionSchema = require("./models/supervision");
 const cors = require('cors');
-
-// add this obj to db
-
-// {
-//     "title": "unit test 2",
-//     "selectedYears": [
-//         "TE"
-//     ],
-//     "subjectsPerYear": {
-//         "TE": "4"
-//     },
-//     "paperSlotsPerDay": "1",
-//     "paperTimeSlots": [
-//         {
-//             "startTime": "13:53",
-//             "endTime": "14:53"
-//         }
-//     ],
-//     "noOfBlocksPerYear": {
-//         "TE": "2"
-//     },
-//     "yearSchedule": [
-//         {
-//             "totalSlots": 8,
-//             "schedule": {
-//                 "2": [
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false
-//                 ],
-//                 "5": [
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false
-//                 ],
-//                 "6": [
-//                     true,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     true
-//                 ],
-//                 "7": [
-//                     false,
-//                     true,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false
-//                 ],
-//                 "8": [
-//                     false,
-//                     false,
-//                     true,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false
-//                 ],
-//                 "10": [
-//                     false,
-//                     false,
-//                     false,
-//                     true,
-//                     false,
-//                     false,
-//                     false,
-//                     false
-//                 ],
-//                 "11": [
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     true,
-//                     false,
-//                     false,
-//                     false
-//                 ],
-//                 "12": [
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     true,
-//                     false,
-//                     false
-//                 ],
-//                 "13": [
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false
-//                 ],
-//                 "20": [
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false
-//                 ],
-//                 "23": [
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false
-//                 ],
-//                 "24": [
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false
-//                 ],
-//                 "27": [
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     true,
-//                     false
-//                 ],
-//                 "30": [
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false
-//                 ],
-//                 "32": [
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false
-//                 ],
-//                 "33": [
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false,
-//                     false
-//                 ]
-//             },
-//             "headers": {
-//                 "days": [
-//                     "Day1 ",
-//                     "Day 2",
-//                     "Day 3",
-//                     "Day 4"
-//                 ],
-//                 "subjects": [
-//                     "Subject 1",
-//                     "Subject 2",
-//                     "Subject 3",
-//                     "Subject 4"
-//                 ],
-//                 "blocks": [
-//                     "Block 1",
-//                     "Block 1",
-//                     "Block 1",
-//                     "Block 1",
-//                     "Block 1",
-//                     "Block 1",
-//                     "Block 1",
-//                     "Block 1"
-//                 ]
-//             }
-//         }
-//     ]
-//}
+const Blocks = require("./models/examBlocks");
 
 
 
 require('dotenv').config()
-// app.use(express.urlencoded({extended: true}));
-// app.use(methodOverride("_method"));
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
@@ -336,22 +123,16 @@ app.put("/teachers/edit/:id",async(req,res) => {
     res.json(teacher);
 })
 
-app.get("/teachers/delete",() => {
-    // render delete info
-})
 
-// app.delete("/teachers/delete/:id",async(req,res) => {
-//     //delete from db
-//     // const {id} = req.params;
-//     // let deletedTeacher = await Teacher.findByIdAndDelete(id);
-//     // res.json(deletedTeacher);
-//     await Teacher.deleteMany({})
-// });
 
-// app.delete("/teachers/delete/",async(req,res) => {
-//     await Teacher.deleteMany({})
-//     res.send("done")
-// });
+app.delete("/teachers/delete/:id",async(req,res) => {
+    //delete from db
+     const {id} = req.params;
+     let deletedTeacher = await Teacher.findByIdAndDelete(id);
+     res.json(deletedTeacher);
+   
+});
+
 
 app.delete("/teachers/delete/:id",async(req,res) => {
     await Teacher.deleteById()
@@ -382,8 +163,6 @@ app.get("/supervision/:id", async(req,res)=>{
 })
 
 
-
-// UNDER WORK DONT USE
 app.post("/supervision/save",async (req,res) => {
     // let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
     try{
@@ -394,13 +173,58 @@ app.post("/supervision/save",async (req,res) => {
     }catch(error){
         res.status(400).json({error:error.message});
     }
-    // res.json(schedule);
+    
 });
 
-// app.delete('/schedules' , async(req ,res)=>{
-//      await supervisionSchema.deleteMany({});
-//      res.send("done")
-// });
+app.post('/blocks/new', async(req ,res)=>{
+    try{
+        let newBlock = new Blocks({...req.body})
+        await newBlock.save();
+        console.log('saved schedule' , newBlock._id);
+        res.json(newBlock);
+    }catch(error){
+        res.status(400).json({error:error.message});
+    }
+});
+
+app.get("/blocks/:id", async(req,res)=>{
+    let {id} = req.params;
+    try{
+        let block =  await Blocks.findById(id);
+        res.json(block);
+    }catch(error){
+        res.status(400).json({error:error.message});
+
+    }
+});
+
+app.get("/blocks", async(req,res)=>{
+    try{
+        let block =  await Blocks.find();
+        res.json(block);
+    }catch(error){
+        res.status(400).json({error:error.message});
+    }
+});
+
+app.put("/blocks/:id", async(req,res)=>{
+    try{
+        let {classroom , capacity , id} = req.body;
+        let block =  await Blocks.findByIdAndUpdate(id , {classroom , capacity});
+        res.json(block);
+    }catch(error){
+        res.status(400).json({error:error.message});
+    }
+});
+
+app.delete("/blocks/:id", async(req,res)=>{
+    try{
+        let block =  await Blocks.findByIdAndDelete(id);
+        res.json(block);
+    }catch(error){
+        res.status(400).json({error:error.message});
+    }
+});
 
 
 app.listen(8080,() => {

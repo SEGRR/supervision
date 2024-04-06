@@ -34,6 +34,44 @@ const teachers = [
 ];
 
 
+const subjects = [
+  {code:'314441' , name:'Theory of Computation' , department:'IT' , semester:5 , year:'TE'},
+  {code:'314442' , name:'Operating Systems' , department:'IT' , semester:5 , year:'TE'},
+  {code:'314443' , name:'Machine Learning' , department:'IT' , semester:5 , year:'TE'},
+  {code:'314444' , name:'Human Computer Interaction' , department:'IT' , semester:5 , year:'TE'},
+  {code:'314445' , name:'Elective-I' , department:'IT' , semester:5 , year:'TE' , elective:true , electiveList:[
+    {code:'314445A', name:'Design and Analysis of Algorithm'},
+    {code:'314445B', name:'Advanced Database and Management System' },
+    {code:'314445C' , name: 'Design Thinking' },
+    {code:'314445D', name: 'Internet of Things'}
+  ]},
+  {code:'314451' , name:'Computer Networks & Security' , department:'IT' , semester:6 , year:'TE'},
+  {code:'314452' , name:'Data Science and Big Data Analytics' , department:'IT' , semester:6 , year:'TE'},
+  {code:'314453' , name:'Web Application Development' , department:'IT' , semester:6 , year:'TE'},
+  {code:'314454' , name:'Elective-II' , department:'IT' , semester:6 , year:'TE', elective:true , electiveList:[
+    {code:'314454A', name:'Artificial Intelligence'},
+    {code:'314454B', name:'Cyber Security ' },
+    {code:'314454C' , name: 'Cloud Computing' },
+    {code:'314454D', name: 'Software Modeling and Design'}
+  ]}
+];
+
+const blocks = [
+  {classroom:'A3-306', capacity:60},
+  {classroom:'A3-307', capacity:60},
+  {classroom:'A3-308', capacity:60},
+  {classroom:'A3-406', capacity:60},
+  {classroom:'A3-407', capacity:60},
+  {classroom:'A3-408', capacity:60},
+];
+
+function sendBlocks(){
+    blocks.forEach((block)=>{
+       axios.post('http://localhost:8080/blocks/new' , {...block}).then((d)=> console.log(d.data));
+    });
+}
+
+
  function sendDatas(params) {
   teachers.forEach(function (teacher) {
     axios.post(`http://localhost:8080/teachers/new`,{ teacherId: teacher.sno, 
@@ -46,7 +84,13 @@ const teachers = [
 
   });
 }
+
+
+
+
+
 // export function getTeacherList() {
 //   return teachers;
 // }
- sendDatas()
+//  sendDatas()
+sendBlocks();
