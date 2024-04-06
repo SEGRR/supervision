@@ -2,14 +2,29 @@ const mongoose = require("mongoose");
 
 
 const subjectSchema = new mongoose.Schema({
+    code: String,
     name: {
         type: String
     },
-    dept:{
+    department:{
         type: String
     },
+    semester:{
+        type: Number
+    },
     year:{
-        type :Number
+        type :String
+    },
+    elective: {
+        type: Boolean,
+        default: false
+    },
+    electiveList: {
+       tye: [{
+         code: String,
+         name: String
+       }],
+       default: []
     }
 });
 

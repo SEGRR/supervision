@@ -3,15 +3,21 @@ const express = require("express");
 const Teacher = require("./models/teacher");
 const app = express();
 const bodyParser = require("body-parser");
-const scheduler = require("./scheduler");
+const {MakeSchedule} = require("./scheduler");
+const supervisionSchema = require("./models/supervision");
+const cors = require('cors');
+const Blocks = require("./models/examBlocks");
 
-// app.use(express.urlencoded({extended: true}));
-// app.use(methodOverride("_method"));
+
+
+require('dotenv').config()
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cors());
 
 async function main(){
-    mongoose.connect("mongodb+srv://sheth-saniya:sheth9970@cluster0.lnp7zp3.mongodb.net/");
+    mongoose.connect(process.env.mongoURL);
 }
 
 main().then(()=>{
@@ -25,9 +31,43 @@ app.get("/",(req,res) => {
     res.send("hello!");
 });
 
-app.get("/supervision",() => {
-    //render dashboard
+app.get("/supervision",async (req ,res) => {
+    try{
+    const sch = await supervisionSchema.find().select(["-schedule" , "-teacherWiseSchedule"]);
+
+     res.json(sch);
+    }
+    catch(error){
+        res.json({error:error.message});
+    }  
 });
+
+app.get("/supervision/:id",async (req ,res) => {
+    const {id} = req.params;
+    try{
+    const sch = await supervisionSchema.findById(id);
+        
+     res.json(sch);
+    }
+    catch(error){
+        res.json({error:error.message});
+    }  
+});
+
+app.delete("/supervision/:id",async (req ,res) => {
+    const {id} = req.params || req.body;
+    try{
+    const sch = await supervisionSchema.findByIdAndDelete(id);
+        
+     res.json(sch);
+    }
+    catch(error){
+        res.json({error:error.message});
+    }  
+});
+
+
+
 
 app.get("/teachers",async (req,res) => {
     //render teachers
@@ -50,26 +90,26 @@ app.get("/teachers/new",(req,res) => {
 app.post("/teachers/new",async (req,res) => {
     //  form -> get teacher info
     // insert in db
-
-    const {name,designation,joiningDate,teachTo} = req.body;
+    const {teacherId,name,designation,joiningDate,teachTo} = req.body;
     let newTeacher = new Teacher({
-        name: name,
-        designation: designation,
-        joiningDate: joiningDate,
-        teachTo: teachTo,
+        teacherId,
+        name,
+        designation,
+        joiningDate,
+        teachTo
     });
+    console.log(req.body);
     console.log(newTeacher);
-    await newTeacher.save();
+   // await newTeacher.save();
     res.json(newTeacher);
-    // await Teacher.insertOne()
+
 });
 
 app.get("/teachers/edit",(req,res) => {
-    //render form
-
+   
 });
 
-app.post("/teachers/edit/:id",async(req,res) => {
+app.put("/teachers/edit/:id",async(req,res) => {
     //update in db
     const {id} = req.params;
     const {name,designation,joiningDate,teachTo} = req.body;
@@ -83,39 +123,110 @@ app.post("/teachers/edit/:id",async(req,res) => {
     res.json(teacher);
 })
 
-app.get("/teachers/delete",() => {
-    // render delete info
-})
+
 
 app.delete("/teachers/delete/:id",async(req,res) => {
     //delete from db
-    // const {id} = req.params;
-    // let deletedTeacher = await Teacher.findByIdAndDelete(id);
-    // res.json(deletedTeacher);
-    await Teacher.deleteMany({})
+     const {id} = req.params;
+     let deletedTeacher = await Teacher.findByIdAndDelete(id);
+     res.json(deletedTeacher);
+   
 });
 
-app.delete("/teachers/delete/",async(req,res) => {
-    await Teacher.deleteMany({})
+
+app.delete("/teachers/delete/:id",async(req,res) => {
+    await Teacher.deleteById()
     res.send("done")
 });
 
-app.get("/supervision/new",(req,res) => {
+app.post("/supervision/new", async (req,res) => {
+    console.log(req.body);
+    try{
+    let  {title, subjectsPerYear, noOfBlocksPerYear, selectedYears, paperSlotsPerDay, paperTimeSlots, teacherList  } = req.body
+    let schedule =   await MakeSchedule(title ,subjectsPerYear ,noOfBlocksPerYear, selectedYears, paperSlotsPerDay , paperTimeSlots , teacherList);
+    res.json(schedule)
+    }catch(error){
+        res.json({error:error.message});
+    }
+});
 
 
+app.get("/supervision/:id", async(req,res)=>{
+    let {id} = req.params;
+    try{
+        let schedule =  await supervisionSchema.findById(id);
+        res.json(schedule);
+    }catch(error){
+        res.status(400).json({error:error.message});
+
+    }
 })
 
-app.post("/supervision/new",(req,res) => {
-    //  form -> get total requirement , exam type
-     // call suitable func based on exam type
-})
 
-app.get("/schedule",async (req,res) => {
-    let sechedule =   await scheduler();
-    res.json(sechedule);
+app.post("/supervision/save",async (req,res) => {
+    // let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
+    try{
+        let newSchedule = new supervisionSchema({...req.body})
+        await newSchedule.save();
+        console.log('saved schedule' , newSchedule._id);
+        res.json(newSchedule);
+    }catch(error){
+        res.status(400).json({error:error.message});
+    }
+    
+});
+
+app.post('/blocks/new', async(req ,res)=>{
+    try{
+        let newBlock = new Blocks({...req.body})
+        await newBlock.save();
+        console.log('saved schedule' , newBlock._id);
+        res.json(newBlock);
+    }catch(error){
+        res.status(400).json({error:error.message});
+    }
+});
+
+app.get("/blocks/:id", async(req,res)=>{
+    let {id} = req.params;
+    try{
+        let block =  await Blocks.findById(id);
+        res.json(block);
+    }catch(error){
+        res.status(400).json({error:error.message});
+
+    }
+});
+
+app.get("/blocks", async(req,res)=>{
+    try{
+        let block =  await Blocks.find();
+        res.json(block);
+    }catch(error){
+        res.status(400).json({error:error.message});
+    }
+});
+
+app.put("/blocks/:id", async(req,res)=>{
+    try{
+        let {classroom , capacity , id} = req.body;
+        let block =  await Blocks.findByIdAndUpdate(id , {classroom , capacity});
+        res.json(block);
+    }catch(error){
+        res.status(400).json({error:error.message});
+    }
+});
+
+app.delete("/blocks/:id", async(req,res)=>{
+    try{
+        let block =  await Blocks.findByIdAndDelete(id);
+        res.json(block);
+    }catch(error){
+        res.status(400).json({error:error.message});
+    }
 });
 
 
 app.listen(8080,() => {
     console.log("http://localhost:8080");
-})
+});
