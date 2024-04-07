@@ -73,12 +73,12 @@ app.get("/teachers/new",(req,res) => {
 app.post("/teachers/new",wrapAsync(async (req,res) => {
     //  form -> get teacher info
     // insert in db
-    const {teacherId,name,designation,joiningDate,teachTo} = req.body;
+    const {teacherId,name,designation,joinDate,teachTo} = req.body;
     let newTeacher = new Teacher({
         teacherId,
         name,
         designation,
-        joiningDate,
+        joinDate,
         teachTo
     });
     console.log(req.body);
@@ -95,11 +95,11 @@ app.get("/teachers/edit",(req,res) => {
 app.put("/teachers/edit/:id",wrapAsync(async(req,res) => {
     //update in db
     const {id} = req.params;
-    const {name,designation,joiningDate,teachTo} = req.body;
+    const {name,designation,joinDate,teachTo} = req.body;
     let updatedTeacher = {
         name: name,
         designation: designation,
-        joiningDate: joiningDate,
+        joinDate: joinDate,
         teachTo: teachTo
     }
     let teacher = await Teacher.findByIdAndUpdate(id,{...updatedTeacher});
@@ -136,15 +136,7 @@ app.get("/supervision/:id", wrapAsync(async(req,res)=>{
     
         let schedule =  await supervisionSchema.findById(id);
         res.json(schedule);
-<<<<<<< HEAD
-    }catch(error){
-        res.status(400).json({error:error.message});
-
-    }
-});
-=======
 }));
->>>>>>> 533261a35db2b327412880d5aadd2c218a5f1db4
 
 
 app.post("/supervision/save",async (req,res) => {

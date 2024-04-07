@@ -16,7 +16,7 @@ const teacherSchema = new mongoose.Schema({
     //     type: Schema.Types.ObjectId,
     //     ref: "Subjects"
     // }],
-    joining_date : {
+    joinDate : {
         type: Date
     },
     teachTo : {
