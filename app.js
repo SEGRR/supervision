@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const {MakeSchedule} = require("./scheduler");
 const supervisionSchema = require("./models/supervision");
+const seatingArrangement = require('./models/seatingArrangement')
 const cors = require('cors');
 const Blocks = require("./models/examBlocks");
 
@@ -160,7 +161,7 @@ app.get("/supervision/:id", async(req,res)=>{
         res.status(400).json({error:error.message});
 
     }
-})
+});
 
 
 app.post("/supervision/save",async (req,res) => {
@@ -225,6 +226,39 @@ app.delete("/blocks/:id", async(req,res)=>{
         res.status(400).json({error:error.message});
     }
 });
+
+
+app.post('/seatings/new' , async (req ,res)=>{
+    // do some validations 
+    let seating = new seatingArrangement({...req.body});
+    await seating.save();
+    res.json(seating);
+});
+
+app.get('/seatings' , async (req ,res)=>{
+    
+    let seating = await seatingArrangement.find();
+    res.json(seating);
+});
+
+app.put('/seatings/:id' , async (req ,res)=>{
+    
+    let seating = await  seatingArrangement.findByIdAndUpdate(id , {...req.body , updated_on:Date.now()});
+    res.json(seating);
+});
+
+app.get('/seatings/:id' , async (req ,res)=>{
+    // do some validations 
+    let {id} = req.params;
+    if(!id){
+        throw new Error('ID was not given in url');
+        return;
+    }
+    let seating =  await seatingArrangement.findById(id);
+    res.json(seating);
+});
+
+
 
 
 app.listen(8080,() => {

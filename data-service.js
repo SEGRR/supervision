@@ -90,7 +90,8 @@ const divisions = {
       { className: "TE5", startRollNo: 32101, endRollNo: 32175, total: 75, department: "ENTC" },
       { className: "TE6", startRollNo: 32201, endRollNo: 32273, total: 73, department: "ENTC" },
       { className: "TE9", startRollNo: 33101, endRollNo: 33181, total: 81, department: "IT" },
-      { className: "TE10", startRollNo: 33201, endRollNo: 33280, total: 80, department: "IT" }
+      { className: "TE10", startRollNo: 33201, endRollNo: 33280, total: 80, department: "IT" },
+      { className: "TE11", startRollNo: 33201, endRollNo: 33294, total: 94, department: "IT" }
   ],
   BE: [
       { className: "BE1", startRollNo: 41101, endRollNo: 41177, total: 77, department: "CE" },
@@ -130,5 +131,5 @@ function sendBlocks(){
 // export function getTeacherList() {
 //   return teachers;
 // }
- sendDatas()
-// sendBlocks();
+//  sendDatas()
+sendBlocks();
