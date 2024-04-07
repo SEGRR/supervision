@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 
 const blockSchema = new mongoose.Schema({
-   classroom:String,
+   name:String,
    capacity:Number,
 });
 
