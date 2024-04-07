@@ -1,7 +1,7 @@
 const Teachers = require("./models/teacher.js");
 
 async function MakeSchedule(title, subjects, blocks, year, paperPerDay, timeSlots, teacherList){
-
+  console.log("In make schedule");
   let finalSchedules = {}
 
     for(let y of year)
@@ -16,7 +16,7 @@ const createSingleSchedule = async (numSubjects ,blocks, paperPerDay , year , te
 // let perClassReq = 1;
 // let  blocks = 6
 
-console.log(numSubjects ,blocks, paperPerDay , year )
+console.log(numSubjects ,blocks, paperPerDay , year)
 
 
 // a block needs teacher for invigilation , a subject requires a number of blocks , 

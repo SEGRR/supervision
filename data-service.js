@@ -65,6 +65,8 @@ const blocks = [
   {classroom:'A3-408', capacity:60},
 ];
 
+
+
 function sendBlocks(){
     blocks.forEach((block)=>{
        axios.post('http://localhost:8080/blocks/new' , {...block}).then((d)=> console.log(d.data));
@@ -92,5 +94,5 @@ function sendBlocks(){
 // export function getTeacherList() {
 //   return teachers;
 // }
-//  sendDatas()
-sendBlocks();
+ sendDatas()
+//sendBlocks();
