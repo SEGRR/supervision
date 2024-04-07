@@ -131,5 +131,10 @@ function sendBlocks(){
 // export function getTeacherList() {
 //   return teachers;
 // }
+<<<<<<< HEAD
 //  sendDatas()
 sendBlocks();
+=======
+ sendDatas()
+
+>>>>>>> 533261a35db2b327412880d5aadd2c218a5f1db4

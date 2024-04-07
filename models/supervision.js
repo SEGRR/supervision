@@ -25,13 +25,22 @@ const mongoose = require("mongoose");
 
 const supervisionSchedule = new mongoose.Schema({
     title: {
-        type: String
+        type: String,
+        required: true
     },
     selectedYears: {
-        type: [String]
+        type: [String],
+        required: true,
+        validate: {
+            validator: function(v) {
+                return v.length >= 1;
+            },
+            message: props => `${props.value} does not meet the minimum length of 1 for selectedYears array!`
+        }
     },
     paperSlotsPerDay: {
-        type: Number
+        type: Number,
+        
     },
     noOfBlocksPerYear: {
         type: Map, 
