@@ -100,7 +100,7 @@ app.post("/teachers/new",async (req,res) => {
     });
     console.log(req.body);
     console.log(newTeacher);
-   // await newTeacher.save();
+    await newTeacher.save();
     res.json(newTeacher);
 
 });
