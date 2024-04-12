@@ -29,9 +29,13 @@ main().then(()=>{
 });
 
 
+// Checkup route
+
 app.get("/",(req,res) => {
     res.send("hello!");
 });
+
+// All schedule routes 
 
 app.get("/supervision",wrapAsync(async (req ,res) => {
     const sch = await supervisionSchema.find().select(["-yearSchedule"]);
@@ -52,6 +56,32 @@ app.delete("/supervision/:id",wrapAsync(async (req ,res) => {
      
 }));
 
+app.post("/supervision/new", wrapAsync(async (req,res) => {
+    console.log(req.body);
+    let  {title, subjectsPerYear, noOfBlocksPerYear, selectedYears, paperSlotsPerDay, paperTimeSlots, teacherList  } = req.body
+    let schedule =   await MakeSchedule(title ,subjectsPerYear ,noOfBlocksPerYear, selectedYears, paperSlotsPerDay , paperTimeSlots , teacherList);
+    console.log(schedule);
+    res.json(schedule);
+}));
+
+
+app.post("/supervision/save",async (req,res) => {
+    // let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
+    try{
+        let newSchedule = new supervisionSchema({...req.body})
+        await newSchedule.save();
+        console.log('saved schedule' , newSchedule._id);
+        res.json(newSchedule);
+    }catch(error){
+        res.status(400).json({error:error.message});
+    }
+    
+});
+
+
+
+
+// Teacher routes 
 app.get("/teachers",wrapAsync(async (req,res) => {
     //render teachers
     const teachers = await Teacher.find();
@@ -66,9 +96,7 @@ app.get("/teachers/:id",wrapAsync(async (req,res) => {
     res.json(teacher);
 }));
 
-app.get("/teachers/new",(req,res) => {
-    //render form
-});
+
 
 app.post("/teachers/new",wrapAsync(async (req,res) => {
     //  form -> get teacher info
@@ -88,10 +116,6 @@ app.post("/teachers/new",wrapAsync(async (req,res) => {
 
 }));
 
-app.get("/teachers/edit",(req,res) => {
-   
-});
-
 app.put("/teachers/edit/:id",wrapAsync(async(req,res) => {
     //update in db
     const {id} = req.params;
@@ -107,7 +131,6 @@ app.put("/teachers/edit/:id",wrapAsync(async(req,res) => {
 }));
 
 
-
 app.delete("/teachers/delete/:id",wrapAsync(async(req,res) => {
     //delete from db
      const {id} = req.params;
@@ -116,41 +139,6 @@ app.delete("/teachers/delete/:id",wrapAsync(async(req,res) => {
    
 }));
 
-
-app.delete("/teachers/delete/:id",async(req,res) => {
-    await Teacher.deleteById()
-    res.send("done")
-});
-
-app.post("/supervision/new", wrapAsync(async (req,res) => {
-    console.log(req.body);
-    let  {title, subjectsPerYear, noOfBlocksPerYear, selectedYears, paperSlotsPerDay, paperTimeSlots, teacherList  } = req.body
-    let schedule =   await MakeSchedule(title ,subjectsPerYear ,noOfBlocksPerYear, selectedYears, paperSlotsPerDay , paperTimeSlots , teacherList);
-    console.log(schedule);
-    res.json(schedule);
-}));
-
-
-app.get("/supervision/:id", wrapAsync(async(req,res)=>{
-    let {id} = req.params;
-    
-        let schedule =  await supervisionSchema.findById(id);
-        res.json(schedule);
-}));
-
-
-app.post("/supervision/save",async (req,res) => {
-    // let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
-    try{
-        let newSchedule = new supervisionSchema({...req.body})
-        await newSchedule.save();
-        console.log('saved schedule' , newSchedule._id);
-        res.json(newSchedule);
-    }catch(error){
-        res.status(400).json({error:error.message});
-    }
-    
-});
 
 app.post('/blocks/new', async(req ,res)=>{
     try{
@@ -211,6 +199,9 @@ app.use((err,req,res) => {
     //res.status(statusCode).send(message);
     res.json({statusCode:statusCode,message:message});
 });
+
+
+// routes for seating arrangement
 
 app.post('/seatings/new' , async (req ,res)=>{
     // do some validations 
