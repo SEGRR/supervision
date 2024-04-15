@@ -1,270 +1,349 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const Teacher = require("./models/teacher");
+const app = express();
 const bodyParser = require("body-parser");
-const {MakeSchedule} = require("./scheduler");
-const supervisionSchema = require("./models/supervision");
-const seatingArrangement = require('./models/seatingArrangement')
-const cors = require('cors');
+const { MakeSchedule } = require("./scheduler");
+const Supervision = require("./models/supervision");
+const cors = require("cors");
 const Blocks = require("./models/examBlocks");
 const ExpressError = require("./utils/ExpressError");
 const wrapAsync = require("./utils/wrapAsync");
-const Subjects = require("./models/subjects");
+const supervisionSchema = require("./utils/supervisionSchema");
+const teacherSchema = require("./utils/teacherSchema");
+const blockSchema = require("./utils/blockSchema");
+const seatingArrangement = require("./models/seatingArrangement");
+require("dotenv").config();
 
-require('dotenv').config();
-const app = express();
-
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-async function main(){
-    mongoose.connect(process.env.mongoURL);
+async function main() {
+  await mongoose.connect(process.env.mongoURL);
 }
 
-main().then(()=>{
+main()
+  .then(() => {
     console.log("successful connection with db");
-}).catch((err)=>{
+  })
+  .catch((err) => {
     console.log(err);
+  });
+
+const validateReqBody = (req, res, next) => {
+  let { error } = teacherSchema.validate(req.body);
+  //console.log(error);
+  console.log("in validate REq Body");
+  if (error) {
+    //console.log(error.details[0].message);
+    return next(new ExpressError(400, error.details[0].message));
+  }
+};
+app.get("/", (req, res) => {
+  res.send("hello!");
 });
 
+/* Teacher Routes */
 
-// Checkup route
-app.get("/",(req,res) => {
-    res.send("hello!");
-});
-
-// All schedule routes 
-
-app.get("/supervision",wrapAsync(async (req ,res) => {
-    const sch = await supervisionSchema.find().select(["-yearSchedule"]);
-     res.json(sch);
-}));
-
-app.get("/supervision/:id",wrapAsync(async (req ,res) => {
-    const {id} = req.params;
-    const sch = await supervisionSchema.findById(id);
-    res.json(sch); 
-}));
-
-app.delete("/supervision/:id",wrapAsync(async (req ,res) => {
-    const {id} = req.params || req.body;
-    const sch = await supervisionSchema.findByIdAndDelete(id);
-        
-     res.json(sch);
-     
-}));
-
-app.post("/supervision/new", wrapAsync(async (req,res) => {
-    console.log(req.body);
-    let  {title, subjectsPerYear, noOfBlocksPerYear, selectedYears, paperSlotsPerDay, paperTimeSlots, teacherList  } = req.body
-    let schedule =   await MakeSchedule(title ,subjectsPerYear ,noOfBlocksPerYear, selectedYears, paperSlotsPerDay , paperTimeSlots , teacherList);
-    console.log(schedule);
-    res.json(schedule);
-}));
-
-
-app.post("/supervision/save",wrapAsync (async (req,res) => {
-    // let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
-    try{
-        let newSchedule = new supervisionSchema({...req.body})
-        await newSchedule.save();
-        console.log('saved schedule' , newSchedule._id);
-        res.json(newSchedule);
-    }catch(error){
-        res.status(400).json({error:error.message});
-    }
-    
-}));
-
-
-
-
-// Teacher routes 
-app.get("/teachers",wrapAsync(async (req,res) => {
-    //render teachers
+app.get(
+  "/teachers",
+  wrapAsync(async (req, res) => {
     const teachers = await Teacher.find();
-    // let jsonData = JSON.stringify(teachers);
+    console.log("In /teachers");
     res.json(teachers);
-}));
+  })
+);
 
-app.get("/teachers/:id",wrapAsync(async (req,res) => {
+app.get(
+  "/teachers/:id",
+  wrapAsync(async (req, res) => {
     console.log(req.params);
-    const {id} = req.params;
+    const { id } = req.params;
+
     const teacher = await Teacher.findById(id);
     res.json(teacher);
-}));
+  })
+);
 
-
-
-app.post("/teachers/new",wrapAsync(async (req,res) => {
-    //  form -> get teacher info
-    // insert in db
-    const {teacherId,name,designation,joinDate,teachTo} = req.body;
+app.post(
+  "/teachers/new",
+  validateReqBody,
+  wrapAsync(async (req, res) => {
+    const { teacherId, name, designation, joiningDate, teachTo } = req.body;
     let newTeacher = new Teacher({
-        teacherId,
-        name,
-        designation,
-        joinDate,
-        teachTo
+      teacherId,
+      name,
+      designation,
+      joiningDate,
+      teachTo,
     });
-    console.log(req.body);
+    //console.log(req.body);
     console.log(newTeacher);
     await newTeacher.save();
     res.json(newTeacher);
+  })
+);
 
-}));
-
-app.put("/teachers/edit/:id",wrapAsync(async(req,res) => {
+app.put(
+  "/teachers/edit/:id",
+  wrapAsync(async (req, res) => {
     //update in db
-    const {id} = req.params;
-    const {name,designation,joinDate,teachTo} = req.body;
+    const { id } = req.params;
+    const { name, designation, joiningDate, teachTo } = req.body;
     let updatedTeacher = {
-        name: name,
-        designation: designation,
-        joinDate: joinDate,
-        teachTo: teachTo
-    }
-    let teacher = await Teacher.findByIdAndUpdate(id,{...updatedTeacher});
+      name: name,
+      designation: designation,
+      joiningDate: joiningDate,
+      teachTo: teachTo,
+    };
+    let teacher = await Teacher.findByIdAndUpdate(id, { ...updatedTeacher });
     res.json(teacher);
-}));
+  })
+);
 
-
-app.delete("/teachers/delete/:id",wrapAsync(async(req,res) => {
+app.delete(
+  "/teachers/delete/:id",
+  wrapAsync(async (req, res) => {
     //delete from db
-     const {id} = req.params;
-     let deletedTeacher = await Teacher.findByIdAndDelete(id);
-     res.json(deletedTeacher);
-   
+    const { id } = req.params;
+    let deletedTeacher = await Teacher.findByIdAndDelete(id);
+    res.json(deletedTeacher);
+  })
+);
+
+/* Supervision Routes */
+app.post(
+  "/supervision/new",
+  wrapAsync(async (req, res, next) => {
+    //console.log(req.body);
+    let { error } = supervisionSchema.validate(req.body);
+    //console.log(error);
+    console.log("in validate REq Body");
+    if (error) {
+      //console.log(error.details[0].message);
+      return next(new ExpressError(400, error.details[0].message));
+    }
+    let {
+      title,
+      subjectsPerYear,
+      noOfBlocksPerYear,
+      selectedYears,
+      paperSlotsPerDay,
+      paperTimeSlots,
+      teacherList,
+    } = req.body;
+    console.log({
+      title,
+      subjectsPerYear,
+      noOfBlocksPerYear,
+      selectedYears,
+      paperSlotsPerDay,
+      paperTimeSlots,
+      teacherList,
+    });
+    // validate data before sending
+    let schedule = await MakeSchedule(
+      title,
+      subjectsPerYear,
+      noOfBlocksPerYear,
+      selectedYears,
+      paperSlotsPerDay,
+      paperTimeSlots,
+      teacherList
+    );
+    console.log("got schedule");
+    //console.log(schedule);
+    res.json(schedule);
+  })
+);
+
+app.get(
+  "/supervision/:id",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let schedule = await Supervision.findById(id);
+    res.json(schedule);
+  })
+);
+
+app.post(
+  "/supervision/save",
+
+  wrapAsync(async (req, res, next) => {
+    // let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
+    let { error } = supervisionSchema.validate(req.body);
+    //console.log("in validate REq Body");
+    if (error) {
+      return next(new ExpressError(400, error.details[0].message));
+    }
+    let newSchedule = new Supervision({ ...req.body });
+    await newSchedule.save();
+    console.log("saved schedule", newSchedule._id);
+    res.json(newSchedule);
+  })
+);
+
+app.get(
+  "/supervision",
+  wrapAsync(async (req, res) => {
+    const sch = await Supervision.find().select(["-yearSchedule"]);
+    res.json(sch);
+  })
+);
+
+app.get(
+  "/supervision/:id",
+  wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    const sch = await Supervision.findById(id);
+    res.json(sch);
+  })
+);
+
+app.delete(
+  "/supervision/:id",
+  wrapAsync(async (req, res) => {
+    const { id } = req.params || req.body;
+    const sch = await Supervision.findByIdAndDelete(id);
+
+    res.json(sch);
+  })
+);
+
+/* Seating Arrangement Routes */
+app.post(
+  "/blocks/new",
+  wrapAsync(async (req, res) => {
+    let { error } = blockSchema.validate(req.body);
+    //console.log("in validate REq Body");
+    if (error) {
+      return next(new ExpressError(400, error.details[0].message));
+    }
+    let newBlock = new Blocks({ ...req.body });
+
+    await newBlock.save();
+    console.log("saved schedule", newBlock._id);
+    res.json(newBlock);
+  })
+);
+
+app.get(
+  "/blocks/:id",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+
+    let block = await Blocks.findById(id);
+    res.json(block);
+  })
+);
+
+app.get(
+  "/blocks",
+  wrapAsync(async (req, res) => {
+    let block = await Blocks.find();
+    res.json(block);
+  })
+);
+
+app.put(
+  "/blocks/:id",
+  wrapAsync(async (req, res) => {
+    let { classroom, capacity, id } = req.body;
+    let { error } = blockSchema.validate(req.body);
+    if (error) {
+      return next(new ExpressError(400, error.details[0].message));
+    }
+    let block = await Blocks.findByIdAndUpdate(id, { classroom, capacity });
+    res.json(block);
+  })
+);
+
+app.put(
+  "/seatings/:id",
+  wrapAsync(async (req, res) => {
+    let seating = await seatingArrangement.findByIdAndUpdate(id, {
+      ...req.body,
+      updated_on: Date.now(),
+    });
+    res.json(seating);
+  })
+);
+
+app.get(
+  "/seatings/:id",
+  wrapAsync(async (req, res) => {
+    // do some validations
+    let { id } = req.params;
+    if (!id) {
+      throw new Error("ID was not given in url");
+    }
+    let seating = await seatingArrangement.findById(id);
+    res.json(seating);
+  })
+);
+
+app.post("/seatings",wrapAsync(async (req,res,next)=> {
+  let seating = new seatingArrangement({...req.body});
+  await seating.save();
+  res.json(seating);
 }));
-
-
-app.post('/blocks/new', async(req ,res)=>{
-    try{
-        let newBlock = new Blocks({...req.body})
-        await newBlock.save();
-        console.log('saved schedule' , newBlock._id);
-        res.json(newBlock);
-    }catch(error){
-        res.status(400).json({error:error.message});
-    }
-});
-
-app.get("/blocks/:id", async(req,res)=>{
-    let {id} = req.params;
-    try{
-        let block =  await Blocks.findById(id);
-        res.json(block);
-    }catch(error){
-        res.status(400).json({error:error.message});
-
-    }
-});
-
-app.get("/blocks", async(req,res)=>{
-    try{
-        let block =  await Blocks.find();
-        res.json(block);
-    }catch(error){
-        res.status(400).json({error:error.message});
-    }
-});
-
-app.put("/blocks/:id", async(req,res)=>{
-    try{
-        let {classroom , capacity , id} = req.body;
-        let block =  await Blocks.findByIdAndUpdate(id , {classroom , capacity});
-        res.json(block);
-    }catch(error){
-        res.status(400).json({error:error.message});
-    }
-});
-
-app.delete("/blocks/:id", async(req,res)=>{
-    try{
-        let block =  await Blocks.findByIdAndDelete(id);
-        res.json(block);
-    }catch(error){
-        res.status(400).json({error:error.message});
-    }
-});
-
-
-
-// routes for seating arrangement
-
-app.post('/seatings/new' , async (req ,res)=>{
-    // do some validations 
-    let seating = new seatingArrangement({...req.body});
-    await seating.save();
-    res.json(seating);
-});
-
-app.get('/seatings' , async (req ,res)=>{
-    
-    let seating = await seatingArrangement.find();
-    res.json(seating);
-});
-
-app.put('/seatings/:id' , async (req ,res)=>{
-    
-    let seating = await  seatingArrangement.findByIdAndUpdate(id , {...req.body , updated_on:Date.now()});
-    res.json(seating);
-});
-
-app.get('/seatings/:id' , async (req ,res)=>{
-    // do some validations 
-    let {id} = req.params;
-    if(!id){
-        throw new Error('ID was not given in url');
-    }
-    let seating =  await seatingArrangement.findById(id);
-    res.json(seating);
-});
 
 // routes for subjects
 
-app.post('/subjects/new' , async (req ,res)=>{
-    // do some validations 
-    let  {branch , year , semester , subjects} = req.body;
-    let sub = new Subjects({branch , year , semester , subjects});
+app.post(
+  "/subjects/new",
+  wrapAsync(async (req, res) => {
+    // do some validations
+    let { branch, year, semester, subjects } = req.body;
+    let sub = new Subjects({ branch, year, semester, subjects });
     await sub.save();
     res.json(sub);
-});
+  })
+);
 
-app.get('/subjects' , async (req ,res)=>{
-    
+app.get(
+  "/subjects",
+  wrapAsync(async (req, res) => {
     let seating = await Subjects.find();
     res.json(seating);
-});
+  })
+);
 
-app.get('/subjects/:branch/:year/:sem/' , async (req ,res)=>{
-    let { branch , year , sem} = req.params;
-    console.log(branch , year , +sem)
-    let subjects = await Subjects.find({ branch , year , semester:+sem})
+app.get(
+  "/subjects/:branch/:year/:sem/",
+  wrapAsync(async (req, res) => {
+    let { branch, year, sem } = req.params;
+    console.log(branch, year, +sem);
+    let subjects = await Subjects.find({ branch, year, semester: +sem });
     res.json(subjects);
-});
+  })
+);
 
-app.put('/subjects/:id' , async (req ,res)=>{
-    
-    let seating = await  seatingArrangement.findByIdAndUpdate(id , {...req.body , updated_on:Date.now()});
+app.put(
+  "/subjects/:id",
+  wrapAsync(async (req, res) => {
+    let seating = await seatingArrangement.findByIdAndUpdate(id, {
+      ...req.body,
+      updated_on: Date.now(),
+    });
     res.json(seating);
+  })
+);
+
+app.all("*", (req, res, next) => {
+  console.log("Error");
+  next(new ExpressError(404, "Page not found!"));
 });
 
-app.all("*",(req,res,next) => {
-    console.log('Error');
-    next(new ExpressError(404,"Page not found!"));
+app.use((err, req, res, next) => {
+  let { statusCode, message } = err;
+  //res.status(statusCode).send(message);
+  console.log("in err handler");
+  console.log(err.message);
+  res.json({ statusCode: statusCode, message: message });
 });
 
-app.use((err,req,res) => {
-    let {statusCode,message} = err;
-    //res.status(statusCode).send(message);
-    res.json({statusCode:statusCode,message:message});
-});
-
-
-
-
-app.listen(8080,() => {
-    console.log("http://localhost:8080");
+app.listen(8080, () => {
+  console.log("http://localhost:8080");
 });
