@@ -189,16 +189,6 @@ app.delete("/blocks/:id", async(req,res)=>{
     }
 });
 
-app.all("*",(req,res,next) => {
-    console.log('Error');
-    next(new ExpressError(404,"Page not found!"));
-});
-
-app.use((err,req,res) => {
-    let {statusCode,message} = err;
-    //res.status(statusCode).send(message);
-    res.json({statusCode:statusCode,message:message});
-});
 
 
 // routes for seating arrangement
@@ -236,7 +226,8 @@ app.get('/seatings/:id' , async (req ,res)=>{
 
 app.post('/subjects/new' , async (req ,res)=>{
     // do some validations 
-    let sub = new Subjects({...req.body});
+    let  {branch , year , semester , subjects} = req.body;
+    let sub = new Subjects({branch , year , semester , subjects});
     await sub.save();
     res.json(sub);
 });
@@ -248,27 +239,28 @@ app.get('/subjects' , async (req ,res)=>{
 });
 
 app.get('/subjects/:branch/:year/:sem/' , async (req ,res)=>{
-    let {Subjects , branch , year , sem} = req.params;
-    let subjects = await Subjects.find({branch , year, semester:sem});
+    let { branch , year , sem} = req.params;
+    console.log(branch , year , +sem)
+    let subjects = await Subjects.find({ branch , year , semester:+sem})
     res.json(subjects);
 });
 
-app.put('/subjects' , async (req ,res)=>{
+app.put('/subjects/:id' , async (req ,res)=>{
     
     let seating = await  seatingArrangement.findByIdAndUpdate(id , {...req.body , updated_on:Date.now()});
     res.json(seating);
 });
 
-app.get('/subjects/:id' , async (req ,res)=>{
-    // do some validations 
-    let {id} = req.params;
-    if(!id){
-        throw new Error('ID was not given in url');
-    }
-    let seating =  await seatingArrangement.findById(id);
-    res.json(seating);
+app.all("*",(req,res,next) => {
+    console.log('Error');
+    next(new ExpressError(404,"Page not found!"));
 });
 
+app.use((err,req,res) => {
+    let {statusCode,message} = err;
+    //res.status(statusCode).send(message);
+    res.json({statusCode:statusCode,message:message});
+});
 
 
 
