@@ -289,6 +289,17 @@ app.post("/seatings",wrapAsync(async (req,res,next)=> {
   res.json(seating);
 }));
 
+app.get("/seatings",wrapAsync(async (req,res)=> {
+    let seating = await seatingArrangement.find();
+    res.json(seating);
+  }));
+
+  app.delete("/seatings/:id",wrapAsync(async (req,res)=> {
+    let {id} = req.params;
+    let seating = await seatingArrangement.findOneAndDelete(id);
+    res.json(seating);
+  }));
+
 // routes for subjects
 
 app.post(
