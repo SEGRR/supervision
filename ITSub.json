@@ -110,3 +110,100 @@
     }
   ]
 }
+
+
+{
+  "title": "Unit Test 1",
+  "selectedAcademicYear": "2023-2024",
+  "selectedDepartment": "IT",
+  "selectedYears": [
+      "SE",
+      "TE"
+  ],
+  "divisionsPerYear": {
+      "SE": [
+          {
+              "className": "SE9",
+              "startRollNo": 23101,
+              "endRollNo": 23183,
+              "total": 83,
+              "department": "IT"
+          },
+          {
+              "className": "SE10",
+              "startRollNo": 23201,
+              "endRollNo": 23286,
+              "total": 86,
+              "department": "IT"
+          }
+      ],
+      "TE": [
+          {
+              "className": "TE9",
+              "startRollNo": 33101,
+              "endRollNo": 33181,
+              "total": 81,
+              "department": "IT"
+          },
+          {
+              "className": "TE10",
+              "startRollNo": 33201,
+              "endRollNo": 33280,
+              "total": 80,
+              "department": "IT"
+          }
+      ]
+  },
+  "examSlotsPerDay": "2",
+  "examTimeSlots": [
+      {
+          "startTime": "09:00",
+          "endTime": "10:00"
+      },
+      {
+          "startTime": "15:00",
+          "endTime": "16:00"
+      }
+  ],
+  "examdays": "3",
+  "examStartDate": "",
+  "examDates": {
+      "0": "2024-04-08",
+      "1": "2024-04-17",
+      "2": "2024-04-16"
+  },
+  "selectedClassrooms": [
+      {
+          "name": "A1 109",
+          "capacity": 50
+      },
+      {
+          "name": "A3 307",
+          "capacity": 59
+      },
+      {
+          "name": "A1 110",
+          "capacity": 49
+      },
+      {
+          "name": "A3 308",
+          "capacity": 50
+      },
+      {
+          "name": "A3 405",
+          "capacity": 47
+      },
+      {
+          "name": "A3 406",
+          "capacity": 48
+      },
+      {
+          "name": "A3 407",
+          "capacity": 54
+      },
+      {
+          "name": "IT Seminar Hall",
+          "capacity": 70
+      }
+  ]
+}
