@@ -538,6 +538,6 @@ function sendSubjects(){
 }
 
 
-// sendDatas();
-// sendBlocks();
-sendSubjects();
+ sendDatas();
+ sendBlocks();
+// sendSubjects();
