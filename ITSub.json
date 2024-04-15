@@ -1,0 +1,112 @@
+{
+"Information Technology": [
+    {
+      "semester": "sem 3",
+      "year":"SE",
+      "subjects": [
+        {
+            "code":"",
+            "name":"Discrete Mathematics"
+        },
+        "Logic Design and Computer Organization",
+        "Data Structures and Algorithms",
+        "Object Oriented Programming",
+        "Basics of Computer Network",
+        "Logic Design and Computer Organization Lab",
+        "Data Structures and Algorithms Lab",
+        "Object Oriented Programming Lab",
+        "Soft Skill Lab"
+      ]
+    },
+    {
+      "semester": "sem 4",
+      "year":"SE",
+      "subjects": [
+        "Engineering Mathematics- Ill",
+        "Processor Architecture",
+        "Database Management System",
+        "Computer Graphics",
+        "Software Engineering",
+        "Programming Skill Development Lab",
+        "Database Management System Lab",
+        "Computer Graphics Lab",
+        "Project Based Learning"
+      ]
+    },
+    {
+      "semester": "sem 5",
+      "year":"TE",
+      "subjects": [
+        {
+          "code":"314441",
+          "name":"Theory of Computation",
+          "abr":""
+        };
+        ,
+        "Operating Systems",
+        "Machine Learning",
+        "Human Computer Interaction",
+        "Design and Analysis of Algorithm",
+        "Advanced Database and Management System",
+        "Design Thinking",
+        "Internet of Things",
+        "Operating Systems Lab",
+        "Human Computer Interaction Laboratory",
+        "Laboratory Practice-I",
+        "Seminar"
+      ]
+    },
+    {
+      "semester": "sem 6",
+      "year":"TE",
+      "subjects": [
+        "Computer Network and Security",
+        "Data Science and Big Data Analytics",
+        "Web Application Development",
+        "Artificial Intelligence",
+        "Cyber Security",
+        "Cloud Computing",
+        "Software Modeling and Design",
+        "Internship",
+        "Computer Network Security Lab",
+        "DS & BDA Lab",
+        "Laboratory Practice-II"
+      ]
+    },
+    {
+      "semester": "sem 7",
+      "year":"BE",
+      "subjects": [
+        "Information Storage and Retrieval",
+        "Software Project Management",
+        "Deep Learning",
+        "Mobile Computing",
+        "High Performance Computing",
+        "Multimedia Technology",
+        "Smart Computing",
+        "Bioinformatics",
+        "Introduction to DevOps",
+        "Computer Vision",
+        "Wireless Communications",
+        "Project Stage-I"
+      ]
+    },
+    {
+      "semester": "sem 8",
+      "year":"BE",
+      "subjects": [
+        "Distributed Systems",
+        "Startup and Entrepreneurship",
+        "Software Defined Networks",
+        "Social Computing",
+        "Natural Language Processing",
+        "Soft Computing",
+        "Game Engineering",
+        "Ethical Hacking and Security",
+        "Augmented and Virtual Reality",
+        "Business Analytics and Intelligence",
+        "Blockchain Technology"
+      ]
+    }
+  ]
+}
