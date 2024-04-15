@@ -1,29 +1,6 @@
 const mongoose = require("mongoose");
 
-
-// const scheduleSchema = new mongoose.Schema({
-//     teacherId: {
-//         type: [Number],
-//         default: []
-//     }
-// });
-
-// const teacherSchema = new mongoose.Schema({
-//     teacherId: {
-//         type: {
-//             slotNo: Number,
-//             date: Date,
-//             time: String,
-//             blockNumber: Number,
-//             subject: String,
-//             year: String,
-//         },
-//         default: {}
-//     }
-// });
-
-
-const supervisionSchedule = new mongoose.Schema({
+const supervisionSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -40,10 +17,25 @@ const supervisionSchedule = new mongoose.Schema({
     },
     paperSlotsPerDay: {
         type: Number,
-        
+        min: 1,
+        max: 2,
+        required: true
     },
     noOfBlocksPerYear: {
         type: Map, 
+        required: true,
+        of: Number,
+        validate: {
+            validator: function(values) {
+                for (let value of values.values()) {
+                    if (!Number.isInteger(value)) {
+                        return false;
+                    }
+                }
+                return true;
+            },
+            message: props => `Values in noOfBlocksPerYear must be integers!`,
+        }
     },
     timeSlots: {
         type: [Date]
@@ -58,7 +50,8 @@ const supervisionSchedule = new mongoose.Schema({
                 blocks:[String]
             }
         }],
-        default: []
+        default: [],
+        required: true
     },
     createdOn: {
         type: Date,
@@ -70,6 +63,6 @@ const supervisionSchedule = new mongoose.Schema({
     },
 });
 
-const supervisionSchema = mongoose.model("Supervision", supervisionSchedule);
+const Supervision = mongoose.model("Supervision", supervisionSchema);
 
-module.exports = supervisionSchema;
+module.exports = Supervision;

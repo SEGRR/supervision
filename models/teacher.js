@@ -2,26 +2,29 @@ const mongoose = require("mongoose");
 const Subjects = require("./subjects.js");
 
 const teacherSchema = new mongoose.Schema({
-    teacherId: Number,
+    teacherId: {
+        type: Number,
+        required: true
+    },
     name:{
         type: String,
+        required: true
     },
     designation:{
         type: String
     },
-    // dept: {
-    //     type: String
-    // },
-    // subjects: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Subjects"
-    // }],
     joining_date : {
         type: Date
     },
     teachTo : {
         type:[String],
-        default:[]
+        default:[],
+        required: true,
+        validate: {
+            validator: function(v) {
+                return v.length >= 1;
+            },
+        }
     },
     
 });
