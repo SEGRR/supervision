@@ -267,43 +267,122 @@ const subjects = [
 ];
 
 const course = [
+  // {
+  //   branch: "IT",
+  //   semester: 5,
+  //   year: "TE",
+  //   subjects: [
+  //     { code: "314441", name: "Theory of Computation", abr: "TOC" },
+  //     { code: "314442", name: "Operating Systems", abr: "OS" },
+  //     { code: "314443", name: "Machine Learning", abr: "ML" },
+  //     { code: "314444", name: "Human Computer Interaction", abr: "HCI" },
+  //     { code: "314445A", name: "Design and Analysis of Algorithm", abr: "DAA" },
+  //     {
+  //       code: "314445B",
+  //       name: "Advanced Database and Management System",
+  //       abr: "ADBMS",
+  //     },
+  //     { code: "314445C", name: "Design Thinking", abr: "DT" },
+  //     { code: "314445D", name: "Internet of Things", abr: "IOT" },
+  //   ],
+  // },
+  // {
+  //   branch: "IT",
+  //   semester: 6,
+  //   year: "TE",
+  //   subjects: [
+  //     { code: "314451", name: "Computer Networks & Security", abr: "CNS" },
+  //     {
+  //       code: "314452",
+  //       name: "Data Science and Big Data Analytics",
+  //       abr: "DSBDA",
+  //     },
+  //     { code: "314453", name: "Web Application Development", abr: "WAD" },
+  //     { code: "314454A", name: "Artificial Intelligence", abr: "AI" },
+  //     { code: "314454B", name: "Cyber Security ", abr: "CS" },
+  //     { code: "314454C", name: "Cloud Computing", abr: "CC" },
+  //     { code: "314454D", name: "Software Modeling and Design", abr: "SMD" },
+  //   ],
+  // },
   {
     branch: "IT",
-    semester: 5,
-    year: "TE",
+    semester: 3,
+    year: "SE",
     subjects: [
-      { code: "314441", name: "Theory of Computation", abr: "TOC" },
-      { code: "314442", name: "Operating Systems", abr: "OS" },
-      { code: "314443", name: "Machine Learning", abr: "ML" },
-      { code: "314444", name: "Human Computer Interaction", abr: "HCI" },
-      { code: "314445A", name: "Design and Analysis of Algorithm", abr: "DAA" },
+      { code: "214441", name: "Discrete Mathematics", abr: "DM" },
       {
-        code: "314445B",
-        name: "Advanced Database and Management System",
-        abr: "ADBMS",
+        code: "214442",
+        name: "Logic Design and Computer Organization",
+        abr: "LDCO",
       },
-      { code: "314445C", name: "Design Thinking", abr: "DT" },
-      { code: "314445D", name: "Internet of Things", abr: "IOT" },
+      { code: "214443", name: "Data Structures and Algorithms", abr: "DSA" },
+      { code: "214444", name: "Object Oriented Programming", abr: "OOP" },
+      { code: "214445", name: "Basics of Computer Network", abr: "BCN" },
     ],
   },
   {
     branch: "IT",
-    semester: 6,
-    year: "TE",
+    semester: 4,
+    year: "SE",
     subjects: [
-      { code: "314451", name: "Computer Networks & Security", abr: "CNS" },
+      { code: "207003", name: "Engineering Mathematics-III", abr: "EM3" },
       {
-        code: "314452",
-        name: "Data Science and Big Data Analytics",
-        abr: "DSBDA",
+        code: "214451",
+        name: "Processor Architecture",
+        abr: "PA",
       },
-      { code: "314453", name: "Web Application Development", abr: "WAD" },
-      { code: "314454A", name: "Artificial Intelligence", abr: "AI" },
-      { code: "314454B", name: "Cyber Security ", abr: "CS" },
-      { code: "314454C", name: "Cloud Computing", abr: "CC" },
-      { code: "314454D", name: "Software Modeling and Design", abr: "SMD" },
+      { code: "214452", name: "Database Management System", abr: "DBMS" },
+      { code: "214453", name: "Computer Graphics", abr: "CG" },
+      { code: "214454", name: "Software Engineering", abr: "SE" },
     ],
   },
+  {
+    branch: "IT",
+    semester: 7,
+    year: "BE",
+    subjects: [
+      { code: "414441", name: "Information and Storage Retrieval", abr: "ISR" },
+      {
+        code: "414441",
+        name: "Software Project Management",
+        abr: "SPM",
+      },
+      { code: "414444A", name: "Elective-3 Mobile Computing", abr: "EL-3 MC" },
+      { code: "414444B", name: "Elective-3 High Performance Computing", abr: "EL-3 HPC" },
+      { code: "414444C", name: "Elective–3 Multimedia Technology", abr: "EL-3 MT" },
+      { code: "414444D", name: "Elective-3 Smart Computing", abr: "EL-3 SC" },
+      { code: "414445A", name: "Elective-4 Bioinformatics", abr: "EL-4 BI" },
+      { code: "414445B", name: "Elective-4 Introduction to DevOps", abr: "EL-4 DevOps" },
+      { code: "414445C", name: "Elective-4 Computer Vision", abr: "EL-4 CV" },
+      { code: "414445D", name: "Elective-4 Wirelesss Communication", abr: "EL-4 WC" }
+    ],
+  },
+  {
+    branch: "IT",
+    semester: 8,
+    year: "BE",
+    subjects: [
+      { code: "414450", name: "Distributed Systems", abr: "DS" },
+      {
+        code: "414453",
+        name: "Startup and Enterpreneurship",
+        abr: "SE",
+      },
+      { code: "414451A", name: "Elective-5 Software Defined Network", abr: "EL-5 SDN" },
+      { code: "414451B", name: "Elective-5 Social Computing", abr: "EL-5 SC" },
+      { code: "414451C", name: "Elective-5 Natural Language Processing", abr: "EL-5 NLP" },
+      { code: "414451D", name: "Elective-5 Soft Computing", abr: "EL-5 SC" },
+      { code: "414451E", name: "Elective-5 Game Engineering", abr: "EL-5 GE" },
+      { code: "414452A", name: "Elective-6 Ethical Hacking and Security", abr: "EL-5 EHS" },
+      { code: "414452B", name: "Elective-6 Ethical Augmented and Virtual Reality", abr: "EL-5 AVR" },
+      { code: "414452C", name: "Elective-6 Ethical Business Analytics and Intelligence", abr: "EL-5 BAI" },
+      { code: "414452D", name: "Elective-6 Ethical Blockchain Technology", abr: "EL-5 BT" },
+
+
+
+    ],
+  },
+
 ];
 
 const blocks = [
@@ -538,6 +617,6 @@ function sendSubjects(){
 }
 
 
- sendDatas();
- sendBlocks();
+//  sendDatas();
+//  sendBlocks();
 // sendSubjects();

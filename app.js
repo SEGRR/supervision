@@ -14,6 +14,7 @@ const teacherSchema = require("./utils/teacherSchema");
 const blockSchema = require("./utils/blockSchema");
 const seatingArrangement = require("./models/seatingArrangement");
 const validateSeatingArrangement = require("./utils/seatingArrangementValidate");
+const Subjects = require('./models/subjects');
 require("dotenv").config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
