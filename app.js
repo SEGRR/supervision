@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const Teacher = require("./models/teacher");
-const app = express();
 const bodyParser = require("body-parser");
 const {MakeSchedule} = require("./scheduler");
 const supervisionSchema = require("./models/supervision");
@@ -10,9 +9,10 @@ const cors = require('cors');
 const Blocks = require("./models/examBlocks");
 const ExpressError = require("./utils/ExpressError");
 const wrapAsync = require("./utils/wrapAsync");
+const Subjects = require("./models/subjects");
 
-
-require('dotenv').config()
+require('dotenv').config();
+const app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -30,7 +30,6 @@ main().then(()=>{
 
 
 // Checkup route
-
 app.get("/",(req,res) => {
     res.send("hello!");
 });
@@ -65,7 +64,7 @@ app.post("/supervision/new", wrapAsync(async (req,res) => {
 }));
 
 
-app.post("/supervision/save",async (req,res) => {
+app.post("/supervision/save",wrapAsync (async (req,res) => {
     // let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
     try{
         let newSchedule = new supervisionSchema({...req.body})
@@ -76,7 +75,7 @@ app.post("/supervision/save",async (req,res) => {
         res.status(400).json({error:error.message});
     }
     
-});
+}));
 
 
 
@@ -191,6 +190,7 @@ app.delete("/blocks/:id", async(req,res)=>{
 });
 
 app.all("*",(req,res,next) => {
+    console.log('Error');
     next(new ExpressError(404,"Page not found!"));
 });
 
@@ -227,11 +227,48 @@ app.get('/seatings/:id' , async (req ,res)=>{
     let {id} = req.params;
     if(!id){
         throw new Error('ID was not given in url');
-        return;
     }
     let seating =  await seatingArrangement.findById(id);
     res.json(seating);
 });
+
+// routes for subjects
+
+app.post('/subjects/new' , async (req ,res)=>{
+    // do some validations 
+    let sub = new Subjects({...req.body});
+    await sub.save();
+    res.json(sub);
+});
+
+app.get('/subjects' , async (req ,res)=>{
+    
+    let seating = await Subjects.find();
+    res.json(seating);
+});
+
+app.get('/subjects/:branch/:year/:sem/' , async (req ,res)=>{
+    let {Subjects , branch , year , sem} = req.params;
+    let subjects = await Subjects.find({branch , year, semester:sem});
+    res.json(subjects);
+});
+
+app.put('/subjects' , async (req ,res)=>{
+    
+    let seating = await  seatingArrangement.findByIdAndUpdate(id , {...req.body , updated_on:Date.now()});
+    res.json(seating);
+});
+
+app.get('/subjects/:id' , async (req ,res)=>{
+    // do some validations 
+    let {id} = req.params;
+    if(!id){
+        throw new Error('ID was not given in url');
+    }
+    let seating =  await seatingArrangement.findById(id);
+    res.json(seating);
+});
+
 
 
 

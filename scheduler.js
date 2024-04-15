@@ -1,7 +1,7 @@
 const Teachers = require("./models/teacher.js");
 
 async function MakeSchedule(title, subjects, blocks, year, paperPerDay, timeSlots, teacherList){
-  console.log("In make schedule");
+  // console.log("In make schedule");
   let finalSchedules = {}
 
     for(let y of year)
@@ -16,7 +16,8 @@ const createSingleSchedule = async (numSubjects ,blocks, paperPerDay , year , te
 // let perClassReq = 1;
 // let  blocks = 6
 
-console.log(numSubjects ,blocks, paperPerDay , year)
+// 
+// console.log(numSubjects ,blocks, paperPerDay , year)
 
 
 // a block needs teacher for invigilation , a subject requires a number of blocks , 
@@ -61,7 +62,9 @@ let perTeacher = Math.floor(totalReq/avail);
 // remaining slots will be assgined to yearOnly teachers 
 var remainingSlots = totalReq % avail;
 
-console.log("avail" , avail)
+// console.log("avail" , avail)
+
+
 
 
 // final schedule
@@ -99,7 +102,7 @@ var sch= 0
 
  }
 
-console.log("starting init make")
+// console.log("starting init make")
 
 // for remaining slots will assigned to yearonly techer 
 // if there are any remaining slots 
@@ -119,7 +122,7 @@ while(sch < totalReq){
 // finally print the result 
 // and return the schedule 
 
-console.table(schedule);
+// console.table(schedule);
  return { totalSlots:totalReq ,schedule};
 
 }
