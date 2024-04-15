@@ -13,7 +13,14 @@ const teacherSchema = new mongoose.Schema({
     designation:{
         type: String
     },
-    joining_date : {
+    // dept: {
+    //     type: String
+    // },
+    // subjects: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Subjects"
+    // }],
+    joinDate : {
         type: Date
     },
     teachTo : {

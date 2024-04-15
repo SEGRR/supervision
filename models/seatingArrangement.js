@@ -3,26 +3,27 @@ const mongoose = require("mongoose");
 
 const seatingArrangementSchema = new mongoose.Schema({
    divisionsPerYear:{
-      type:[
-         {
-            className:String,
-            startRollNo:Number,
-            endRollNo:Number,
-            total:Number,
-            department:String
-         }
-      ],
-      default:[]
+      // type:[
+      //    {
+            // className:String,
+            // startRollNo:Number,
+            // endRollNo:Number,
+            // total:Number,
+            // department:String
+      //    }
+      // ],
+      type:Map,
+      required:true
    },
    examSlotsPerDay:Number,
    examStartDate:Date,
    examTimeSlots:[
-      { startTime: String, endTime: String },
+      { startTime: String, endTime: String }
    ],
    examdays:Number,
    selectedAcademicYear:String,
    selectedClassrooms:[
-      { name:String, capacity: Number },
+      { name:String, capacity: Number }
    ],
    selectedDepartment:String,
    selectedYears:[String],

@@ -10,7 +10,8 @@ async function MakeSchedule(
   timeSlots,
   teacherList
 ) {
-  try{console.log("In make schedule");
+  try{
+  console.log("In make schedule");
   let finalSchedules = {};
 
   for (let y of year)

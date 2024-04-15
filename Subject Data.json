@@ -1,0 +1,513 @@
+{
+  "Electronics and Computer Engineering": [
+    {
+      "semester": "sem 3",
+      "subjects": [
+        "Engineering Mathematics III",
+        "Electronic Circuits",
+        "Digital Circuits",
+        "Data structures & Algorithms",
+        "Computer Organization",
+        "Electronic Circuit Lab",
+        "Digital circuits Lab",
+        "Data Structure Algorithm Lab",
+        "Computer Organization Lab"
+      ]
+    },
+    {
+      "semester": "sem 4",
+      "subjects": [
+        "Signals & Systems",
+        "Principles of Programming Language",
+        "Principles of Communication System",
+        "Object Oriented Programming",
+        "System Programming & Operatin Systems",
+        "Signals & System Lab",
+        "Communication Lab",
+        "object Oriented Programming Lab",
+        "Employability Skill Development",
+        "Project Based Learning"
+      ]
+    },
+    {
+      "semester": "sem 5",
+      "subjects": [
+        "Microcontroller and Applications2",
+        "Power Electronics and Applications3",
+        "Digital Signal Processing and Applications",
+        "Advanced Data Structures",
+        "Microcontroller and Power Lab",
+        "DSP and Elective-I Lab",
+        "Advanced Data Structures Lab",
+        "Seminar",
+        "Computer Graphics",
+        "Advanced JAVA and Mobile Application Development",
+        "Mechatronics",
+        "Fundamentals of HDL"
+      ]
+    },
+    {
+      "semester": "sem 6",
+      "subjects": [
+        "Advanced Processor",
+        "Database Management System",
+        "Data Communication",
+        "Advanced Processor and Data Communication Lab",
+        "DBMS and Elective-II Lab",
+        "Project Based Seminar",
+        "Internship",
+        "Web Technology",
+        "Multimedia Techniques",
+        "Programmable Logic Controller and Application",
+        "Network Analysis and Synthesis"
+      ]
+    },
+    {
+      "semester": "sem 7",
+      "subjects": [
+        "Advanced Techniques for Electrical Vehicle",
+        "Internet of Things",
+        "Lab Practice-I (Advanced Techniques for Electrical Vehicle + IoT)",
+        "Project Stage I",
+        "Embedded System and RTOS",
+        "Mobile Communication",
+        "VLSI Design",
+        "Robotics and Automation",
+        "Information and Cyber Security",
+        "Software Testing and Quality Assurance",
+        "Digital Image Processing",
+        "Artificial Intelligence and Machine Learning"
+      ]
+    },
+    {
+      "semester": "sem 8",
+      "subjects": [
+        "Computer Network",
+        "Cloud Computing",
+        "Lab Practice-III (Computer Network)",
+        "Project Stage II",
+        "Electronics System Design",
+        "Software Defined Radio",
+        "Optical Fiber Communication",
+        "Wireless Sensor Network",
+        "Data Mining and Ware Housing",
+        "Design and Analysis of Algorithm",
+        "Human Computer Interface",
+        "Software Engineering",
+        "Open Elective"
+      ]
+    }
+  ],
+  "Artificial Intelligence and Data Science": [
+    {
+      "semester": "sem 3",
+      "subjects": [
+        "Discrete Mathematics",
+        "Fundamentals of Data Structures",
+        "Object Oriented Programming (OOP)",
+        "Computer Graphics",
+        "Operating Systems",
+        "Data Structures Laboratory",
+        "OOP and Computer Graphics Laboratory",
+        "Operating Systems Laboratory",
+        "Business Communication Skills",
+        "Humanity. and Social Science"
+      ]
+    },
+    {
+      "semester": "sem 4",
+      "subjects": [
+        "Statistics",
+        "Internet of Things",
+        "Data Structures and Algorithms",
+        "Software Engineering",
+        "Management Information Systems",
+        "Internet of Things Laboratory",
+        "Data Structures and Algorithms Laboratory",
+        "Project Based Learning II",
+        "Code of Conduct"
+      ]
+    },
+    {
+      "semester": "sem 5",
+      "subjects": [
+        "Data Base Management Systems",
+        "Computer Networks",
+        "Web Technology",
+        "Artificial Intelligence",
+        "SoftwareLaboratory I",
+        "CNLaboratory",
+        "Seminar and Technical Communication",
+        "Environmental Studies",
+        "Embedded Systems & Security",
+        "Design Thinking",
+        "Pattern Recognition",
+        "Human Computer Interface"
+      ]
+    },
+    {
+      "semester": "sem 6",
+      "subjects": [
+        "Data Science",
+        "Cyber Security",
+        "Artificial Neural Network",
+        "Software Laboratory II",
+        "Software Laboratory III",
+        "Internship",
+        "Mini Project",
+        "Robotics and Automation",
+        "Natural Language Processing",
+        "Cloud Computing",
+        "Software Modeling and Architecture"
+      ]
+    },
+    {
+      "semester": "sem 7",
+      "subjects": [
+        "Machine Learning",
+        "Data Modeling & Visualization",
+        "Quantum Artificial Intelligence",
+        "Industrial Internet of Things",
+        "Enterprise Architecture and Components",
+        "Bioinformatics",
+        "GPU Programming and Architecture",
+        "Information Retrieval",
+        "UI/UX Design",
+        "Optimization Algorithms",
+        "Computer Laboratory I",
+        "Computer Laboratory II",
+        "Project Stage I"
+      ]
+    },
+    {
+      "semester": "sem 8",
+      "subjects": [
+        "Computational Intelligence",
+        "Distributed Computing",
+        "Virtual Reality and Game Development",
+        "Big Data analytics",
+        "Software Development for Portable Devices",
+        "Deep Learning",
+        "Augmented Reality",
+        "Business Intelligence",
+        "Information Systems Management",
+        "Reinforcement Learning",
+        "Computer Laboratory III",
+        "Computer Laboratory IV",
+        "Project Stage II"
+      ]
+    }
+  ],
+  "Electronics & Telecommunication Engineering": [
+    {
+      "semester": "sem 3",
+      "subjects": [
+        "Engineering Mathematics III",
+        "Electronic Circuits",
+        "Digital Circuits",
+        "Electrical Circuits",
+        "Data structures",
+        "Electronic Circuit Lab",
+        "Digital circuits Lab",
+        "Electrical Circuit Lab",
+        "Data Structures Lab",
+        "Electronic Skill Development"
+      ]
+    },
+    {
+      "semester": "sem 4",
+      "subjects": [
+        "Signals & Systems",
+        "Control Systems",
+        "Principles of Communication Systems",
+        "Object Oriented Programming",
+        "Signals & Control System Lab",
+        "Principle of communication Systems Lab",
+        "Object Oriented Programming Lab",
+        "Data Analytics Lab",
+        "Employability Skill Development",
+        "Project Based Learning"
+      ]
+    },
+    {
+      "semester": "sem 5",
+      "subjects": [
+        "Digital Communication",
+        "Electromagnetic Field Theory",
+        "Database Management",
+        "Microcontrollers",
+        "Digital Signal Processing",
+        "Electronic Measurements",
+        "Fundamentals of JAVA Programming",
+        "Computer Networks",
+        "Digital Communication Lab",
+        "Database Management Lab",
+        "Microcontroller Lab",
+        "Skill Development"
+      ]
+    },
+    {
+      "semester": "sem 6",
+      "subjects": [
+        "Digital Image Processing",
+        "Sensors in Automation",
+        "Advanced JAVA Programming",
+        "Embedded Processors",
+        "Network Security",
+        "Cellular Networks",
+        "Project Management",
+        "Power Devices & Circuits",
+        "Cellular Networks Lab",
+        "Power Devices & Circuits Lab",
+        "Internship",
+        "Mini Project"
+      ]
+    },
+    {
+      "semester": "sem 7",
+      "subjects": [
+        "Radiation & Microwave Theory",
+        "VLSI Design and Technology",
+        "Cloud Computing",
+        "Lab Practice - 1 (RMT & Cloud Computing)",
+        "Lab Practice - 2 (VLSI Design & Elective -3)",
+        "Project Stage",
+        "Speech Processing",
+        "Data Mining",
+        "PLC SCADA & Automation",
+        "Electronic Product Development",
+        "JAVA Script",
+        "Deep Learning",
+        "Embedded & RTOS",
+        "Low Power CMOS",
+        "Modernized IoT",
+        "Smart Antennas"
+      ]
+    },
+    {
+      "semester": "sem 8",
+      "subjects": [
+        "Fiber Optic Communication",
+        "Elective",
+        "Elective",
+        "Innovation & Entrepreneurship",
+        "Digital Business Management",
+        "Fiber Optic Lab",
+        "Lab Practice - 3",
+        "Project Stage",
+        "Biomedical Signal Processing",
+        "System on Chip",
+        "Industrial Drives & Automation",
+        "Nano Electronics",
+        "Android Development",
+        "Remote Sensing",
+        "Embedded System Design",
+        "Digital Marketing",
+        "Mobile Computing",
+        "Open Elective"
+      ]
+    }
+  ],
+  "Information Technology": [
+    {
+      "semester": "sem 3",
+      "subjects": [
+        "Discrete Mathematics",
+        "Logic Design and Computer Organization",
+        "Data Structures and Algorithms",
+        "Object Oriented Programming",
+        "Basics of Computer Network",
+        "Logic Design and Computer Organization Lab",
+        "Data Structures and Algorithms Lab",
+        "Object Oriented Programming Lab",
+        "Soft Skill Lab"
+      ]
+    },
+    {
+      "semester": "sem 4",
+      "subjects": [
+        "Engineering Mathematics- Ill",
+        "Processor Architecture",
+        "Database Management System",
+        "Computer Graphics",
+        "Software Engineering",
+        "Programming Skill Development Lab",
+        "Database Management System Lab",
+        "Computer Graphics Lab",
+        "Project Based Learning"
+      ]
+    },
+    {
+      "semester": "sem 5",
+      "subjects": [
+        "Theory of Computation",
+        "Operating Systems",
+        "Machine Learning",
+        "Human Computer Interaction",
+        "Design and Analysis of Algorithm",
+        "Advanced Database and Management System",
+        "Design Thinking",
+        "Internet of Things",
+        "Operating Systems Lab",
+        "Human Computer Interaction Laboratory",
+        "Laboratory Practice-I",
+        "Seminar"
+      ]
+    },
+    {
+      "semester": "sem 6",
+      "subjects": [
+        "Computer Network and Security",
+        "Data Science and Big Data Analytics",
+        "Web Application Development",
+        "Artificial Intelligence",
+        "Cyber Security",
+        "Cloud Computing",
+        "Software Modeling and Design",
+        "Internship",
+        "Computer Network Security Lab",
+        "DS & BDA Lab",
+        "Laboratory Practice-II"
+      ]
+    },
+    {
+      "semester": "sem 7",
+      "subjects": [
+        "Information Storage and Retrieval",
+        "Software Project Management",
+        "Deep Learning",
+        "Mobile Computing",
+        "High Performance Computing",
+        "Multimedia Technology",
+        "Smart Computing",
+        "Bioinformatics",
+        "Introduction to DevOps",
+        "Computer Vision",
+        "Wireless Communications",
+        "Project Stage-I"
+      ]
+    },
+    {
+      "semester": "sem 8",
+      "subjects": [
+        "Distributed Systems",
+        "Startup and Entrepreneurship",
+        "Software Defined Networks",
+        "Social Computing",
+        "Natural Language Processing",
+        "Soft Computing",
+        "Game Engineering",
+        "Ethical Hacking and Security",
+        "Augmented and Virtual Reality",
+        "Business Analytics and Intelligence",
+        "Blockchain Technology"
+      ]
+    }
+  ],
+  "Computer Engineering": [
+    {
+      "semester": "sem 3",
+      "subjects": [
+        "Discrete Mathematics",
+        "Fundamentals of Data Structures",
+        "Object Oriented Programming (OOP)",
+        "Computer Graphics",
+        "Digital Electronics and Logic Design",
+        "Data Structures Laboratory",
+        "OOP and Computer Graphics Laboratory",
+        "Digital Electronics Laboratory",
+        "Business Communication Skills",
+        "Humanity and Social Science"
+      ]
+    },
+    {
+      "semester": "sem 4",
+      "subjects": [
+        "Engineering Mathematics Ill",
+        "Data Structures and Algorithms",
+        "Software Engineering",
+        "Microprocessor",
+        "Principles of Programming Languages",
+        "Data Structures and Algorithms Laboratory",
+        "Microprocessor Laboratory",
+        "Project Based Learning II",
+        "Code of Conduct"
+      ]
+    },
+    {
+      "semester": "sem 5",
+      "subjects": [
+        "Database Management Systems",
+        "Theory of Computation",
+        "Systems Programming and Operating System",
+        "Computer Networks and Security",
+        "Internet of Things and Embedded Systems",
+        "Human Computer Interface",
+        "Distributed Systems",
+        "Software Project Management",
+        "Database Management Systems Laboratory",
+        "Computer Networks and Security Laboratory",
+        "Laboratory Practice I",
+        "Seminar and Technical Communication"
+      ]
+    },
+    {
+      "semester": "sem 6",
+      "subjects": [
+        "Data Science and Big Data Analytics",
+        "Web Technology",
+        "Artificial Intelligence",
+        "Information Security",
+        "Augmented and Virtual Reality",
+        "Cloud Computing",
+        "Software Modeling and Architectures",
+        "Internship",
+        "Data Science and Big Data Analytics Laboratory",
+        "Web Technology Laboratory",
+        "Laboratory Practice II"
+      ]
+    },
+    {
+      "semester": "sem 7",
+      "subjects": [
+        "Design and Analysis of Algorithms",
+        "Machine Learning",
+        "Blockchain Technology",
+        "Pervasive Computing",
+        "Multimedia Techniques",
+        "Cyber Security And Digital Forensics",
+        "Object Oriented Modeling And Design",
+        "Digital Signal Processing",
+        "Information Retrieval",
+        "GPU Programming And Architecture",
+        "Mobile Computing",
+        "Software Testing And Quality Assurance",
+        "Compilers",
+        "Laboratory Practice III",
+        "Laboratory Practice IV",
+        "Project Stage I",
+        "Audit Course 7"
+      ]
+    },
+    {
+      "semester": "sem 8",
+      "subjects": [
+        "High Performance Computing",
+        "Deep Learning",
+        "Natural Language Processing",
+        "Image Processing",
+        "Software Defined Networks",
+        "Advanced Digital Signal Processing",
+        "Open Elective I",
+        "Pattern Recognition",
+        "Soft Computing",
+        "Business Intelligence",
+        "Quantum Computing",
+        "Open Elective II",
+        "Laboratory Practice V",
+        "Laboratory Practice VI",
+        "Project Stage II"
+      ]
+    }
+  ]
+}
