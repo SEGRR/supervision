@@ -13,6 +13,7 @@ const supervisionSchema = require("./utils/supervisionSchema");
 const teacherSchema = require("./utils/teacherSchema");
 const blockSchema = require("./utils/blockSchema");
 const seatingArrangement = require("./models/seatingArrangement");
+const validateSeatingArrangement = require("./utils/seatingArrangementValidate");
 require("dotenv").config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -284,6 +285,10 @@ app.get(
 );
 
 app.post("/seatings",wrapAsync(async (req,res,next)=> {
+  let {error} = validateSeatingArrangement(req.body);
+  if (error) {
+    return next(new ExpressError(400, error.details[0].message));
+  }
   let seating = new seatingArrangement({...req.body});
   await seating.save();
   res.json(seating);
