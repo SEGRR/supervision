@@ -3,15 +3,6 @@ const mongoose = require("mongoose");
 
 const seatingArrangementSchema = new mongoose.Schema({
    divisionsPerYear:{
-      // type:[
-      //    {
-            // className:String,
-            // startRollNo:Number,
-            // endRollNo:Number,
-            // total:Number,
-            // department:String
-      //    }
-      // ],
       type:Map,
       required:true
    },

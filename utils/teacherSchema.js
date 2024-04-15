@@ -6,6 +6,6 @@ const teacherSchema = Joi.object({
     designation: Joi.string(),
     joining_date: Joi.date(),
     teachTo: Joi.array().min(1).items(Joi.string())  
-});
+}).required();
 
 module.exports = teacherSchema;
