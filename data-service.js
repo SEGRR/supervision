@@ -267,46 +267,46 @@ const subjects = [
 ];
 
 const course = [
-  // {
-  //   branch: "IT",
-  //   semester: 5,
-  //   year: "TE",
-  //   subjects: [
-  //     { code: "314441", name: "Theory of Computation", abr: "TOC" },
-  //     { code: "314442", name: "Operating Systems", abr: "OS" },
-  //     { code: "314443", name: "Machine Learning", abr: "ML" },
-  //     { code: "314444", name: "Human Computer Interaction", abr: "HCI" },
-  //     { code: "314445A", name: "Design and Analysis of Algorithm", abr: "DAA" },
-  //     {
-  //       code: "314445B",
-  //       name: "Advanced Database and Management System",
-  //       abr: "ADBMS",
-  //     },
-  //     { code: "314445C", name: "Design Thinking", abr: "DT" },
-  //     { code: "314445D", name: "Internet of Things", abr: "IOT" },
-  //   ],
-  // },
-  // {
-  //   branch: "IT",
-  //   semester: 6,
-  //   year: "TE",
-  //   subjects: [
-  //     { code: "314451", name: "Computer Networks & Security", abr: "CNS" },
-  //     {
-  //       code: "314452",
-  //       name: "Data Science and Big Data Analytics",
-  //       abr: "DSBDA",
-  //     },
-  //     { code: "314453", name: "Web Application Development", abr: "WAD" },
-  //     { code: "314454A", name: "Artificial Intelligence", abr: "AI" },
-  //     { code: "314454B", name: "Cyber Security ", abr: "CS" },
-  //     { code: "314454C", name: "Cloud Computing", abr: "CC" },
-  //     { code: "314454D", name: "Software Modeling and Design", abr: "SMD" },
-  //   ],
-  // },
   {
     branch: "IT",
-    semester: 3,
+    semester: 1,
+    year: "TE",
+    subjects: [
+      { code: "314441", name: "Theory of Computation", abr: "TOC" },
+      { code: "314442", name: "Operating Systems", abr: "OS" },
+      { code: "314443", name: "Machine Learning", abr: "ML" },
+      { code: "314444", name: "Human Computer Interaction", abr: "HCI" },
+      { code: "314445A", name: "Design and Analysis of Algorithm", abr: "DAA" },
+      {
+        code: "314445B",
+        name: "Advanced Database and Management System",
+        abr: "ADBMS",
+      },
+      { code: "314445C", name: "Design Thinking", abr: "DT" },
+      { code: "314445D", name: "Internet of Things", abr: "IOT" },
+    ],
+  },
+  {
+    branch: "IT",
+    semester: 2,
+    year: "TE",
+    subjects: [
+      { code: "314451", name: "Computer Networks & Security", abr: "CNS" },
+      {
+        code: "314452",
+        name: "Data Science and Big Data Analytics",
+        abr: "DSBDA",
+      },
+      { code: "314453", name: "Web Application Development", abr: "WAD" },
+      { code: "314454A", name: "Artificial Intelligence", abr: "AI" },
+      { code: "314454B", name: "Cyber Security ", abr: "CS" },
+      { code: "314454C", name: "Cloud Computing", abr: "CC" },
+      { code: "314454D", name: "Software Modeling and Design", abr: "SMD" },
+    ],
+  },
+  {
+    branch: "IT",
+    semester: 1,
     year: "SE",
     subjects: [
       { code: "214441", name: "Discrete Mathematics", abr: "DM" },
@@ -322,7 +322,7 @@ const course = [
   },
   {
     branch: "IT",
-    semester: 4,
+    semester: 2,
     year: "SE",
     subjects: [
       { code: "207003", name: "Engineering Mathematics-III", abr: "EM3" },
@@ -338,7 +338,7 @@ const course = [
   },
   {
     branch: "IT",
-    semester: 7,
+    semester: 1,
     year: "BE",
     subjects: [
       { code: "414441", name: "Information and Storage Retrieval", abr: "ISR" },
@@ -359,7 +359,7 @@ const course = [
   },
   {
     branch: "IT",
-    semester: 8,
+    semester: 2,
     year: "BE",
     subjects: [
       { code: "414450", name: "Distributed Systems", abr: "DS" },
@@ -377,9 +377,6 @@ const course = [
       { code: "414452B", name: "Elective-6 Ethical Augmented and Virtual Reality", abr: "EL-5 AVR" },
       { code: "414452C", name: "Elective-6 Ethical Business Analytics and Intelligence", abr: "EL-5 BAI" },
       { code: "414452D", name: "Elective-6 Ethical Blockchain Technology", abr: "EL-5 BT" },
-
-
-
     ],
   },
 
@@ -619,4 +616,4 @@ function sendSubjects(){
 
 //  sendDatas();
 //  sendBlocks();
-// sendSubjects();
+sendSubjects();

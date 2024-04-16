@@ -207,3 +207,40 @@
       }
   ]
 }
+
+{
+  "title": "1",
+  "selectedYears": [
+      "TE",
+      "BE"
+  ],
+  "subjectsPerYear": {
+      "TE": [
+          "HCI",
+          "ADBMS"
+      ],
+      "BE": [
+          "EL-3 MC"
+      ]
+  },
+  "paperSlotsPerDay": "1",
+  "paperTimeSlots": [
+      {
+          "startTime": "16:58",
+          "endTime": "17:58"
+      }
+  ],
+  "noOfBlocksPerYear": {
+      "TE": [
+          "A3 307",
+          "A1 110"
+      ],
+      "BE": [
+          "A1 110",
+          "A3 407",
+          "A1 109"
+      ]
+  },
+  "semester": "1",
+  "department": "IT"
+}

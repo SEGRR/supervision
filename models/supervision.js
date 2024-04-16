@@ -25,19 +25,6 @@ const supervisionSchema = new mongoose.Schema({
     },
     subjectsPerYear:{
         type: Map, 
-        required: true,
-        of: Number,
-        validate: {
-            validator: function(values) {
-                for (let value of values.values()) {
-                    if (!Number.isInteger(value)) {
-                        return false;
-                    }
-                }
-                return true;
-            },
-            message: props => `Values in subjectPerYear must be integers!`,
-        }
     },
     paperSlotsPerDay: {
         type: Number,
@@ -48,18 +35,6 @@ const supervisionSchema = new mongoose.Schema({
     noOfBlocksPerYear: {
         type: Map, 
         required: true,
-        of: Number,
-        validate: {
-            validator: function(values) {
-                for (let value of values.values()) {
-                    if (!Number.isInteger(value)) {
-                        return false;
-                    }
-                }
-                return true;
-            },
-            message: props => `Values in noOfBlocksPerYear must be integers!`,
-        }
     },
     paperTimeSlots: {
         type: [{

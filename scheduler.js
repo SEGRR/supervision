@@ -2,23 +2,23 @@ const Teachers = require("./models/teacher.js");
 const wrapAsync = require("./utils/wrapAsync.js");
 
 async function MakeSchedule(
-  title,
-  subjects,
-  blocks,
-  year,
-  paperPerDay,
-  timeSlots,
+{
+  subjectsPerYear,
+  noOfBlocksPerYear,
+  selectedYears,
+  paperSlotsPerDay,
+ // paperTimeSlots,
   teacherList
+}
 ) {
   try{
   console.log("In make schedule");
   let finalSchedules = {};
-
-  for (let y of year)
+  for (let y of selectedYears)
     finalSchedules[y] = await createSingleSchedule(
-      subjects[y],
-      blocks[y],
-      paperPerDay,
+      subjectsPerYear[y].length,
+      noOfBlocksPerYear[y].length,
+      paperSlotsPerDay,
       y,
       teacherList
     );
@@ -30,16 +30,16 @@ async function MakeSchedule(
 }
 
 const createSingleSchedule = async (
-  numSubjects,
+  numsubjectsPerYear,
   blocks,
   paperPerDay,
   year,
   teacherList
 ) => {
   try {
-    console.log(numSubjects, blocks, paperPerDay, year);
+    console.log(numsubjectsPerYear, blocks, paperPerDay, year);
 
-    let totalReq = numSubjects * blocks;
+    let totalReq = numsubjectsPerYear * blocks;
     let perDayReq = totalReq / paperPerDay;
 
     let allTeachers = await Teachers.find({ teachTo: year });
@@ -90,6 +90,9 @@ const createSingleSchedule = async (
       }
     }
 
+    // removes teachers with no assigned schedule
+    
+
     //console.table(schedule);
     return { totalSlots: totalReq, schedule };
   } catch (err) {
@@ -98,6 +101,18 @@ const createSingleSchedule = async (
   }
 };
 
+
+
 function makeFacultyWiseSchedule(sch) {}
 
-module.exports = { MakeSchedule };
+function removeEmptyTeachers(schedule){
+  for (const key in schedule) {
+    if (!schedule[key].includes(true)) {
+      delete schedule[key];
+    }
+  }
+
+  return schedule;
+}
+
+module.exports = { MakeSchedule , removeEmptyTeachers };

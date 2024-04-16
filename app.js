@@ -9,10 +9,9 @@ const cors = require("cors");
 const Blocks = require("./models/examBlocks");
 const ExpressError = require("./utils/ExpressError");
 const wrapAsync = require("./utils/wrapAsync");
-const supervisionSchema = require("./utils/supervisionSchema");
+const {supervisionSchemaValidator, newSupervisionSchemaValidator}  = require("./utils/supervisionSchema");
 const teacherSchema = require("./utils/teacherSchema");
 const blockSchema = require("./utils/blockSchema");
-const seatingArrangement = require("./models/seatingArrangement");
 const validateSeatingArrangement = require("./utils/seatingArrangementValidate");
 const Subjects = require('./models/subjects');
 require("dotenv").config();
@@ -119,41 +118,15 @@ app.post(
   "/supervision/new",
   wrapAsync(async (req, res, next) => {
     //console.log(req.body);
-    let { error } = supervisionSchema.validate(req.body);
+    let { error } = newSupervisionSchemaValidator(req.body);
     //console.log(error);
     console.log("in validate Req Body");
     if (error) {
       //console.log(error.details[0].message);
       return next(new ExpressError(400, error.details[0].message));
     }
-    let {
-      title,
-      subjectsPerYear,
-      noOfBlocksPerYear,
-      selectedYears,
-      paperSlotsPerDay,
-      paperTimeSlots,
-      teacherList,
-    } = req.body;
-    console.log({
-      title,
-      subjectsPerYear,
-      noOfBlocksPerYear,
-      selectedYears,
-      paperSlotsPerDay,
-      paperTimeSlots,
-      teacherList,
-    });
     // validate data before sending
-    let schedule = await MakeSchedule(
-      title,
-      subjectsPerYear,
-      noOfBlocksPerYear,
-      selectedYears,
-      paperSlotsPerDay,
-      paperTimeSlots,
-      teacherList
-    );
+    let schedule = await MakeSchedule(req.body);
     console.log("got schedule");
     //console.log(schedule);
     res.json(schedule);
@@ -174,7 +147,7 @@ app.post(
 
   wrapAsync(async (req, res, next) => {
     // let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
-    let { error } = supervisionSchema.validate(req.body);
+    let { error } = supervisionSchemaValidator(req.body);
     //console.log("in validate REq Body");
     if (error) {
       return next(new ExpressError(400, error.details[0].message));
