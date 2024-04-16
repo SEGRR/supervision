@@ -5,6 +5,14 @@ const supervisionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    department:{
+        type:String,
+        default:""
+    },
+    semester:{
+        type:Number,
+        default:null
+    },
     selectedYears: {
         type: [String],
         required: true,
@@ -13,6 +21,22 @@ const supervisionSchema = new mongoose.Schema({
                 return v.length >= 1;
             },
             message: props => `${props.value} does not meet the minimum length of 1 for selectedYears array!`
+        }
+    },
+    subjectsPerYear:{
+        type: Map, 
+        required: true,
+        of: Number,
+        validate: {
+            validator: function(values) {
+                for (let value of values.values()) {
+                    if (!Number.isInteger(value)) {
+                        return false;
+                    }
+                }
+                return true;
+            },
+            message: props => `Values in subjectPerYear must be integers!`,
         }
     },
     paperSlotsPerDay: {
@@ -37,8 +61,11 @@ const supervisionSchema = new mongoose.Schema({
             message: props => `Values in noOfBlocksPerYear must be integers!`,
         }
     },
-    timeSlots: {
-        type: [Date]
+    paperTimeSlots: {
+        type: [{
+            startTime:String,
+            endTime:String
+        }]
     },
     yearSchedule: {
         type: [{

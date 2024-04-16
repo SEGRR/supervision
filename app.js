@@ -121,7 +121,7 @@ app.post(
     //console.log(req.body);
     let { error } = supervisionSchema.validate(req.body);
     //console.log(error);
-    console.log("in validate REq Body");
+    console.log("in validate Req Body");
     if (error) {
       //console.log(error.details[0].message);
       return next(new ExpressError(400, error.details[0].message));
