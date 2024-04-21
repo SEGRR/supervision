@@ -38,8 +38,11 @@ const validateReqBody = (req, res, next) => {
   if (error) {
     //console.log(error.details[0].message);
     return next(new ExpressError(400, error.details[0].message));
+  } else {
+    next();
   }
 };
+
 app.get("/", (req, res) => {
   res.send("hello!");
 });
@@ -211,19 +214,21 @@ app.delete(
   })
 );
 
-/* Seating Arrangement Routes */
+/* Block Routes */
 app.post(
   "/blocks/new",
   wrapAsync(async (req, res) => {
+
     let { error } = blockSchema.validate(req.body);
     //console.log("in validate REq Body");
     if (error) {
       return next(new ExpressError(400, error.details[0].message));
     }
-    let newBlock = new Blocks({ ...req.body });
-
+    let { name, capacity } = req.body;
+    let newBlock = new Blocks({ name: name, capacity: capacity });
+    //console.log(newBlock);
     await newBlock.save();
-    console.log("saved schedule", newBlock._id);
+    //console.log("saved schedule", newBlock._id);
     res.json(newBlock);
   })
 );
@@ -232,7 +237,6 @@ app.get(
   "/blocks/:id",
   wrapAsync(async (req, res) => {
     let { id } = req.params;
-
     let block = await Blocks.findById(id);
     res.json(block);
   })
@@ -259,6 +263,8 @@ app.put(
   })
 );
 
+/* Seating Arrangement Routes */
+
 app.put(
   "/seatings/:id",
   wrapAsync(async (req, res) => {
@@ -283,11 +289,14 @@ app.get(
   })
 );
 
-app.post("/seatings",wrapAsync(async (req,res,next)=> {
-  let seating = new seatingArrangement({...req.body});
-  await seating.save();
-  res.json(seating);
-}));
+app.post(
+  "/seatings",
+  wrapAsync(async (req, res, next) => {
+    let seating = new seatingArrangement({ ...req.body });
+    //await seating.save();
+    res.json(seating);
+  })
+);
 
 // routes for subjects
 
