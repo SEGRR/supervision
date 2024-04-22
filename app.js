@@ -242,6 +242,7 @@ app.put(
 app.delete(
   "/blocks/:id",
   wrapAsync(async (req, res) => {
+    let {id} = req.params
     let block = await Blocks.findByIdAndDelete(id);
     res.json(block);
   })
