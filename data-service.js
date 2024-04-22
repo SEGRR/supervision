@@ -613,7 +613,19 @@ function sendSubjects(){
   })
 }
 
+function sendDivisions(){
+  const flattenData = Object.values(divisions).reduce((acc, val) => acc.concat(val), []);
+  flattenData.forEach((c)=>{
+    axios
+      .post(`http://localhost:8080/divisions/new`, {division : c})
+      .then((d) => {
+        console.log(d.data);
+      });
+  })
+}
+
 
 //  sendDatas();
 //  sendBlocks();
-sendSubjects();
+// sendSubjects();
+sendDivisions();

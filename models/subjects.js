@@ -35,7 +35,10 @@ const subjectSchema = new mongoose.Schema({
     subjects:{
         type:[
             {
-                code:String,
+                code:{
+                    type:String,
+                    unique:true
+                },
                 name:String,
                 abr:String,
             }
