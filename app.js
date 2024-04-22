@@ -309,12 +309,19 @@ app.post(
   wrapAsync(async (req, res) => {
     // do some validations
     let { branch, year, semester, subjects } = req.body;
+    if(coursePresent(req.body)) throw new ExpressError(400 , `${year} ${branch} semester ${semester} Course Already Exists`)
     let sub = new Subjects({ branch, year, semester , subjects});
     if(!sub) throw new ExpressError("Course not found");
      await sub.save();
     res.json(sub);
   })
 );
+
+async function coursePresent({ branch, year, semester }){
+    let doc =  await Subjects.find({ branch, year, semester })
+    if(doc) return true;
+    return false;
+}
 
 
 app.post(
