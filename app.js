@@ -309,8 +309,9 @@ app.post(
   wrapAsync(async (req, res) => {
     // do some validations
     let { branch, year, semester, subjects } = req.body;
-    let sub = await Subjects.findByIdAndUpdate({ branch, year, semester } , {subjects});
+    let sub = new Subjects({ branch, year, semester , subjects});
     if(!sub) throw new ExpressError("Course not found");
+     await sub.save();
     res.json(sub);
   })
 );
