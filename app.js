@@ -350,6 +350,22 @@ app.post(
 );
 
 
+app.put(
+  "/subjects/:id/",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let { year, semester , branch ,subjects } = req.body;
+
+    let doc = await Subjects.findByIdAndUpdate(id , {year , semester ,branch ,subjects} , {new: true});
+    if (!doc) {
+      throw new ExpressError(400, "Course not found");
+    }
+
+    console.log(doc);
+    res.json(doc);
+  })
+);
+
 app.get(
   "/subjects",
   wrapAsync(async (req, res) => {
