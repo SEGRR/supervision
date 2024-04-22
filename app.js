@@ -227,13 +227,13 @@ app.get(
 
 app.put(
   "/blocks/:id",
-  wrapAsync(async (req, res) => {
-    let { classroom, capacity, id } = req.body;
-    let { error } = blockSchema.validate(req.body);
-    if (error) {
-      return next(new ExpressError(400, error.details[0].message));
-    }
-    let block = await Blocks.findByIdAndUpdate(id, { classroom, capacity });
+  wrapAsync(async (req, res , next) => {
+    let { classroom, capacity, _id } = req.body;
+   //  let { error } = blockSchema.validate(req.body);
+    // if (error) {
+    //   return next(new ExpressError(400, error.details[0].message));
+    // }
+    let block = await Blocks.findByIdAndUpdate(_id, { classroom, capacity });
     res.json(block);
   })
 );
@@ -469,7 +469,6 @@ app.delete(
   "/subjects/:id/:code",
   wrapAsync(async (req, res) => {
     let { id ,code} = req.params;
-    console.log(branch, year, sem);
 
     const doc = await Subjects.findOneAndUpdate({_id:id , "subjects.code":code} , {$pull : {subjects:{code}} }, {new:true})
    
@@ -490,6 +489,21 @@ app.delete(
 
     const doc = await Subjects.findOneAndDelete({year , branch , semester:sem})
    
+    if (!doc) {
+      throw new ExpressError(400, "year not found");
+    }
+    res.json(doc);
+  })
+);
+
+
+app.delete(
+  "/subjects/:id",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+   
+
+    const doc = await Subjects.findByIdAndDelete(id);
     if (!doc) {
       throw new ExpressError(400, "year not found");
     }
