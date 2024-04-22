@@ -325,14 +325,14 @@ async function coursePresent({ branch, year, semester }){
 
 
 app.post(
-  "/subjects/:branch/:year/:sem/",
+  "/subjects/:id/",
   wrapAsync(async (req, res) => {
-    let { branch, year, sem } = req.params;
+    let { id } = req.params;
     let { subject } = req.body;
     console.log(subject);
-    let doc = await Subjects.findOne({ branch, year, semester: sem });
+    let doc = await Subjects.findById(id);
     if (!doc) {
-      throw new ExpressError(400, "Specified subject not found");
+      throw new ExpressError(400, "Course not found");
     }
 
     if (checkUniqueSubject(subject, doc)) {
@@ -380,6 +380,24 @@ app.get(
 );
 
 app.get(
+  "/subjects/:id/:code",
+  wrapAsync(async (req, res) => {
+    let {id } = req.params;
+    
+
+    let doc = await Subjects.findOne({
+      _id:id,
+      "subjects.code": code,
+    });
+    if (!doc) {
+      throw new ExpressError(400, "subject not found");
+    }
+    console.log("hey");
+    res.json(doc.subjects.find((sub) => sub.code == code));
+  })
+);
+
+app.get(
   "/subjects/:branch/:year/:sem/:code",
   wrapAsync(async (req, res) => {
     let { branch, year, sem, code } = req.params;
@@ -415,14 +433,45 @@ app.put(
   })
 );
 
+app.put(
+  "/subjects/:id/:code",
+  wrapAsync(async (req, res) => {
+    let { id ,code } = req.params;
+    let {subject} = req.body;
+    console.log(branch, year, sem);
+
+    const doc = await Subjects.findOneAndUpdate({_id:id, "subjects.code":code} , {$set : {"subjects.$":subject}} , {new:true})
+   
+    if (!doc) {
+      throw new ExpressError(400, "year not found");
+    }
+    res.json(doc);
+  })
+);
+
 app.delete(
   "/subjects/:branch/:year/:sem/:code",
   wrapAsync(async (req, res) => {
     let { branch, year, sem, code } = req.params;
-    let {subject} = req.body;
+   
     console.log(branch, year, sem);
 
     const doc = await Subjects.findOneAndUpdate({year , branch , semester:sem , "subjects.code":code} , {$pull : {subjects:{code}} }, {new:true})
+   
+    if (!doc) {
+      throw new ExpressError(400, "year not found");
+    }
+    res.json(doc);
+  })
+);
+
+app.delete(
+  "/subjects/:id/:code",
+  wrapAsync(async (req, res) => {
+    let { id ,code} = req.params;
+    console.log(branch, year, sem);
+
+    const doc = await Subjects.findOneAndUpdate({_id:id , "subjects.code":code} , {$pull : {subjects:{code}} }, {new:true})
    
     if (!doc) {
       throw new ExpressError(400, "year not found");
