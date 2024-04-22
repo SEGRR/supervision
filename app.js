@@ -238,6 +238,15 @@ app.put(
   })
 );
 
+
+app.delete(
+  "/blocks/:id",
+  wrapAsync(async (req, res) => {
+    let block = await Blocks.findByIdAndDelete(id);
+    res.json(block);
+  })
+);
+
 app.put(
   "/seatings/:id",
   wrapAsync(async (req, res) => {
