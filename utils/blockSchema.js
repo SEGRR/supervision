@@ -5,4 +5,7 @@ const blockSchema = Joi.object({
     capacity: Joi.number().min(1).required()
 })
 
-module.exports = blockSchema;
+
+
+module.exports = blockSchema
+

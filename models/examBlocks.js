@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 
 
 const blockSchema = new mongoose.Schema({
-   name:String,
+   name:{
+      type:String,
+      unique:true
+   },
    capacity:Number,
 });
 

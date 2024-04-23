@@ -1,17 +1,18 @@
 const mongoose = require("mongoose");
 
-
 const seatingArrangementSchema = new mongoose.Schema({
    divisionsPerYear:{
       type:Map,
       required:true
    },
-   examSlotsPerDay:Number,
+   examSlotsPerDay:String,
    examStartDate:Date,
    examTimeSlots:[
       { startTime: String, endTime: String }
    ],
-   examdays:Number,
+   examdays:String,
+   examStartDate:String,
+   examDates:Map,
    selectedAcademicYear:String,
    selectedClassrooms:[
       { name:String, capacity: Number }
