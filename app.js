@@ -21,11 +21,11 @@ const Subjects = require("./models/subjects");
 const Divisions = require("./models/division");
 
 const seatingArrangement = require("./models/seatingArrangement");
-const Admin = require("./models/admin");
-const session = require("express-session");
-const LocalStrategy = require("passport-local");
-const passport = require("passport");
-const {isLoggedIn} = require("./utils/middleware");
+// const Admin = require("./models/admin");
+// const session = require("express-session");
+// const LocalStrategy = require("passport-local");
+// const passport = require("passport");
+// const {isLoggedIn} = require("./utils/middleware");
 
 require("dotenv").config();
 
@@ -33,19 +33,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-const sessionOptions = {
-  secret: "mysecret",
-  resave: false,
-  saveUninitialized: true,
-};
+// const sessionOptions = {
+//   secret: "mysecret",
+//   resave: false,
+//   saveUninitialized: true,
+// };
 
-app.use(session(sessionOptions));
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(Admin.authenticate()));
+// app.use(session(sessionOptions));
+// app.use(passport.initialize());
+// app.use(passport.session());
+// passport.use(new LocalStrategy(Admin.authenticate()));
 
-passport.serializeUser(Admin.serializeUser());
-passport.deserializeUser(Admin.deserializeUser());
+// passport.serializeUser(Admin.serializeUser());
+// passport.deserializeUser(Admin.deserializeUser());
 
 async function main() {
   await mongoose.connect(process.env.mongoURL);
@@ -77,26 +77,26 @@ app.get("/", (req, res) => {
 
 /* Admin routes */
 
-app.post(
-  "/login",
-  passport.authenticate("local", { failureRedirect: "/login" }),
-  async (req, res) => {
-    // send response to frontend
-  }
-);
+// app.post(
+//   "/login",
+//   passport.authenticate("local", { failureRedirect: "/login" }),
+//   async (req, res) => {
+//     // send response to frontend
+//   }
+// );
 
-app.get("/logout",isLoggedIn,(req,res,next) => {
-  req.logout((err) => {
-    if(err) {
-      return next(err);
-    }
-    //res.redirect() res.json()
-  });
-});
+// app.get("/logout",(req,res,next) => {
+//   req.logout((err) => {
+//     if(err) {
+//       return next(err);
+//     }
+//     //res.redirect() res.json()
+//   });
+// });
 /* Teacher Routes */
 
 app.get(
-  "/teachers",isLoggedIn,
+  "/teachers",
   wrapAsync(async (req, res) => {
     const teachers = await Teacher.find();
     console.log("In /teachers");
@@ -105,7 +105,7 @@ app.get(
 );
 
 app.get(
-  "/teachers/:id",isLoggedIn,
+  "/teachers/:id",
   wrapAsync(async (req, res) => {
     console.log(req.params);
     const { id } = req.params;
@@ -117,7 +117,7 @@ app.get(
 
 app.post(
   "/teachers/new",
-  isLoggedIn,
+  
   validateReqBody,
   wrapAsync(async (req, res) => {
     const { teacherId, name, designation, joiningDate, teachTo } = req.body;
@@ -137,7 +137,7 @@ app.post(
 
 app.put(
   "/teachers/edit/:id",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     //update in db
     const { id } = req.params;
@@ -155,7 +155,7 @@ app.put(
 
 app.delete(
   "/teachers/delete/:id",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     //delete from db
     const { id } = req.params;
@@ -167,7 +167,7 @@ app.delete(
 /* Supervision Routes */
 app.post(
   "/supervision/new",
-  isLoggedIn,
+  
   wrapAsync(async (req, res, next) => {
     //console.log(req.body);
     let { error } = newSupervisionSchemaValidator(req.body);
@@ -187,7 +187,7 @@ app.post(
 
 app.get(
   "/supervision/:id",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let schedule = await Supervision.findById(id);
@@ -197,7 +197,7 @@ app.get(
 
 app.post(
   "/supervision/save",
-  isLoggedIn,
+  
   wrapAsync(async (req, res, next) => {
     // let  {subjectsPerYear ,title, examDays, noOfBlocks, selectedYears, paperSlotsPerDay, paperTimeSlots , semester, teacherList , finalSchedule  } = req.body
     let { error } = supervisionSchemaValidator(req.body);
@@ -214,7 +214,7 @@ app.post(
 
 app.get(
   "/supervision",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     const sch = await Supervision.find().select(["-yearSchedule"]);
     res.json(sch);
@@ -223,7 +223,7 @@ app.get(
 
 app.get(
   "/supervision/:id",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const sch = await Supervision.findById(id);
@@ -233,7 +233,7 @@ app.get(
 
 app.delete(
   "/supervision/:id",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     const { id } = req.params || req.body;
     const sch = await Supervision.findByIdAndDelete(id);
@@ -245,7 +245,7 @@ app.delete(
 /* Block Routes */
 app.post(
   "/blocks/new",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     let { error } = blockSchema.validate(req.body);
     //console.log("in validate REq Body");
@@ -265,7 +265,7 @@ app.post(
 
 app.get(
   "/blocks/:id",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let block = await Blocks.findById(id);
@@ -275,7 +275,7 @@ app.get(
 
 app.get(
   "/blocks",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     let block = await Blocks.find();
     res.json(block);
@@ -300,7 +300,7 @@ app.put(
 app.delete(
   "/blocks/:id",
 
-  isLoggedIn,
+  
 
   wrapAsync(async (req, res) => {
     let {id} = req.params
@@ -313,7 +313,7 @@ app.delete(
 
 app.put(
   "/seatings/:id",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     let seating = await seatingArrangement.findByIdAndUpdate(id, {
       ...req.body,
@@ -325,7 +325,7 @@ app.put(
 
 app.get(
   "/seatings/:id",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     // do some validations
     let { id } = req.params;
@@ -361,16 +361,10 @@ app.get(
 
 app.delete(
   "/seatings/:id",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let seating = await seatingArrangement.findOneAndDelete(id);
-
-  isLoggedIn,
-  wrapAsync(async (req, res, next) => {
-    let seating = new seatingArrangement({ ...req.body });
-    //await seating.save();
-
     res.json(seating);
   })
 );
@@ -379,7 +373,7 @@ app.delete(
 
 app.post(
   "/subjects/new",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     // do some validations
     let { branch, year, semester, subjects } = req.body;
@@ -442,7 +436,7 @@ app.put(
 
 app.get(
   "/subjects",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     let doc = await Subjects.find();
     res.json(doc);
@@ -462,7 +456,7 @@ app.get(
 
 app.get(
   "/subjects/:branch/:year/:sem/",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     let { branch, year, sem } = req.params;
     console.log(branch, year, +sem);
@@ -610,7 +604,7 @@ app.delete(
 
 app.put(
   "/subjects/:id",
-  isLoggedIn,
+  
   wrapAsync(async (req, res) => {
     let seating = await seatingArrangement.findByIdAndUpdate(id, {
       ...req.body,
