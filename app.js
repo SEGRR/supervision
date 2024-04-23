@@ -18,6 +18,7 @@ const blockSchema = require("./utils/blockSchema");
 const validateSeatingArrangement = require("./utils/seatingArrangementValidate");
 const Subjects = require("./models/subjects");
 const Divisions = require("./models/division");
+const seatingArrangement = require('./models/seatingArrangement')
 require("dotenv").config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
